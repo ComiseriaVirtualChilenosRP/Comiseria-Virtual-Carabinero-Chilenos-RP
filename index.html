@@ -1,1 +1,1046 @@
-adw
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comisaría Virtual Épica - Chile Roleplay</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2331/2331961.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --secondary: #003366;
+            --accent: #00aaff;
+            --gold: #ffd700;
+            --dark: #0f1a2e;
+            --darker: #0a1425;
+            --darkest: #050c1a;
+            --light: #e6f7ff;
+            --success: #00cc66;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+            --animation-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--darker) 50%, var(--dark) 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        /* FONDO CON PARTÍCULAS */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* HEADER ÉPICO */
+        .epic-header {
+            background: rgba(10, 20, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 50px rgba(0, 102, 204, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        .epic-header.scrolled {
+            background: rgba(5, 15, 30, 0.98);
+            padding: 8px 0;
+            box-shadow: 0 15px 60px rgba(0, 102, 204, 0.9);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-carabineros {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0, 102, 204, 0.8);
+            animation: logoRotate 20s linear infinite;
+        }
+
+        @keyframes logoRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradientFlow 4s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-nuevo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.7);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: rgba(10, 20, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-login-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login-option:hover {
+            background: rgba(0, 102, 204, 0.3);
+        }
+
+        /* HERO ÉPICO */
+        .epic-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 40px;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradientFlow 3s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 18px 35px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.7);
+            filter: brightness(1.2);
+        }
+
+        /* SECCIONES ÉPICAS */
+        .epic-section {
+            padding: 100px 40px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradientFlow 3s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .section-subtitle {
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ccccff;
+            font-weight: 600;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* SECCIÓN QUIÉNES SOMOS */
+        .about-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 70px 40px;
+            margin: 0 auto 60px auto;
+            max-width: 1200px;
+            border: 2px solid rgba(0, 102, 204, 0.5);
+            box-shadow: 0 25px 70px rgba(0, 102, 204, 0.4);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .about-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .features-list li {
+            margin: 15px 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.5);
+            transition: all 0.4s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 102, 204, 0.7);
+        }
+
+        /* SECCIÓN TRÁMITES */
+        .tramites-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 70px 40px;
+            margin: 0 auto 60px auto;
+            max-width: 1200px;
+            border: 2px solid rgba(0, 102, 204, 0.5);
+            box-shadow: 0 25px 70px rgba(0, 102, 204, 0.4);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .tramites-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-buttons button {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 102, 204, 0.5);
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-buttons button:hover, .filter-buttons button.active {
+            background: rgba(0, 102, 204, 0.3);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
+        }
+
+        /* CARDS ÉPICAS */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid transparent;
+            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.2);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .card.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 102, 204, 0.4);
+            border-color: var(--primary);
+        }
+
+        .card-icon-wrapper {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+            color: var(--primary);
+        }
+
+        .card:hover .card-icon-wrapper {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .card p {
+            text-align: center;
+            color: #ccccff;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .card button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .card button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
+        }
+
+        /* GALERÍA ÉPICA */
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 70px 40px;
+            margin: 0 auto 60px auto;
+            max-width: 1200px;
+            border: 2px solid rgba(0, 102, 204, 0.5);
+            box-shadow: 0 25px 70px rgba(0, 102, 204, 0.4);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .gallery-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 102, 204, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        /* MODALES ÉPICOS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 3px solid var(--primary);
+            box-shadow: 0 30px 80px rgba(0, 102, 204, 0.6);
+            position: relative;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 68, 68, 0.2);
+            border: 2px solid var(--danger);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--danger);
+            font-size: 1.5rem;
+        }
+
+        .close-modal:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .modal-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradientFlow 3s ease infinite;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 102, 204, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 102, 204, 0.5);
+            outline: none;
+        }
+
+        .form-group div {
+            margin: 8px 0;
+        }
+
+        .form-group input[type="radio"], .form-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .modal-content button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .modal-content button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
+        }
+
+        /* LIGHTBOX ÉPICO */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.7);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            color: var(--danger);
+            transform: scale(1.2);
+        }
+
+        /* FOOTER ÉPICO */
+        .epic-footer {
+            background: rgba(10, 20, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 3px solid var(--primary);
+            box-shadow: 0 -8px 50px rgba(0, 102, 204, 0.8);
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 0 40px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-col p {
+            color: #ccccff;
+            line-height: 1.6;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin: 10px 0;
+        }
+
+        .footer-col ul li a {
+            color: #ccccff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccccff;
+        }
+
+        /* TOAST NOTIFICATIONS */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 4000;
+        }
+
+        .toast {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--success);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 30px rgba(0, 204, 102, 0.5);
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 350px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            font-size: 2rem;
+            color: var(--success);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .toast-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .toast-message {
+            color: #ccccff;
+            text-align: center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .about-container {
+                flex-direction: column;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- FONDO CON PARTÍCULAS -->
+    <div id="particles-js"></div>
+
+    <!-- HEADER ÉPICO -->
+    <header class="epic-header" id="navbar">
+        <div class="header-container">
+            <div class="header-left">
+                <img class="logo-carabineros" src="https://cdn-icons-png.flaticon.com/512/2331/2331961.png" alt="Logo Carabineros">
+                <span class="header-text">Comisaría Virtual Épica</span>
+            </div>
+            <div class="header-center">
+                <img class="logo-nuevo" src="https://cdn-icons-png.flaticon.com/512/2331/2331961.png" alt="Logo del Servidor">
+            </div>
+            <div class="header-right" id="session-controls">
+                <div class="dropdown" title="Ingresar">
+                    <button class="btn btn-primary">Ingresar al Sistema</button>
+                    <div class="dropdown-content login-options">
+                        <a href="/auth/user" class="btn-login-option">
+                            <i class="fas fa-user"></i> Como Usuario
+                        </a>
+                        <a href="/auth/discord" class="btn-login-option">
+                            <i class="fas fa-user-shield"></i> Como Funcionario
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO ÉPICO -->
+    <section class="epic-hero">
+        <div class="hero-content">
+            <h1>COMISARÍA VIRTUAL ÉPICA</h1>
+            <p>Bienvenido al sistema de gestión policial más avanzado de Chile Roleplay Community. Realiza tus trámites de forma segura, rápida y con estilo futurista.</p>
+            <a href="#tramites" class="hero-button">Explorar Trámites Disponibles</a>
+        </div>
+    </section>
+
+    <!-- SECCIÓN QUIÉNES SOMOS -->
+    <section id="quienes-somos" class="epic-section">
+        <div class="about-section">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2 class="section-title">¿QUIÉNES SOMOS?</h2>
+                    <p class="section-subtitle">
+                        Somos Chile Roleplay Community, una comunidad dedicada a crear experiencias de roleplay inmersivas y de alta calidad. Nuestra Comisaría Virtual es una herramienta clave para facilitar la interacción entre los ciudadanos y nuestras fuerzas del orden.
+                    </p>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Trámites 100% en línea con tecnología de vanguardia</li>
+                        <li><i class="fas fa-check-circle"></i> Interacción directa y segura con cifrado militar</li>
+                        <li><i class="fas fa-check-circle"></i> Comprometidos con un roleplay justo y realista</li>
+                        <li><i class="fas fa-check-circle"></i> Sistema de respuesta rápida las 24/7</li>
+                        <li><i class="fas fa-check-circle"></i> Interfaz futurista con efectos visuales impresionantes</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="https://i.imgur.com/398Fhkf.png" alt="Imagen de la comunidad">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TRÁMITES -->
+    <section id="tramites" class="epic-section">
+        <div class="tramites-section">
+            <h2 class="section-title">TRÁMITES Y DENUNCIAS</h2>
+            <p class="section-subtitle">Selecciona el trámite deseado y sigue las instrucciones. Nuestro sistema te guiará paso a paso.</p>
+            
+            <div class="filter-buttons">
+                <button data-filter="todos" class="active">Todos los Trámites</button>
+                <button data-filter="denuncia">Denuncias</button>
+                <button data-filter="informacion">Información Anónima</button>
+                <button data-filter="actuar">Actuar Policial</button>
+            </div>
+
+            <div class="card-container">
+                <div class="card" data-category="denuncia">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-car-burst"></i>
+                    </div>
+                    <h3>Robo de Vehículo</h3>
+                    <p>Denuncia el robo de tu automóvil u otro vehículo motorizado con nuestro sistema de rastreo avanzado.</p>
+                    <button data-modal-id="modal-robo-vehiculo">Iniciar Trámite Épico</button>
+                </div>
+
+                <div class="card" data-category="informacion">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3>Crimen Organizado</h3>
+                    <p>Entrega información anónima sobre tenencia ilegal de arma, robos, homicidios y secuestros con total seguridad.</p>
+                    <button data-modal-id="modal-crimen-organizado">Informar Anónimamente</button>
+                </div>
+
+                <div class="card" data-category="actuar">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Queja contra Funcionarios</h3>
+                    <p>Envía una queja formal sobre el actuar de algún funcionario policial con nuestro sistema de seguimiento.</p>
+                    <button data-modal-id="modal-queja-funcionario">Presentar Queja</button>
+                </div>
+
+                <div class="card" data-category="denuncia">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-hand-lizard"></i>
+                    </div>
+                    <h3>Hurto Simple</h3>
+                    <p>Apropiación de cosa mueble ajena sin violencia o intimidación. Reporta con nuestro sistema automatizado.</p>
+                    <button data-modal-id="modal-hurto-simple">Denunciar Hurto</button>
+                </div>
+
+                <div class="card" data-category="denuncia">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-house-damage"></i>
+                    </div>
+                    <h3>
