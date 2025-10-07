@@ -27,6 +27,52 @@
             background: var(--gris-oscuro);
             color: var(--blanco);
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Partículas flotantes */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--verde-claro);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat linear infinite;
+            box-shadow: 0 0 10px var(--verde-claro);
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(var(--float-x)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Asegurar que el contenido esté por encima */
+        header, .hero, section, footer {
+            position: relative;
+            z-index: 1;
         }
 
         /* Pantalla de Carga Épica */
@@ -811,6 +857,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+    <!-- Sistema de Partículas -->
+    <div id="particles-js"></div>
+
     <!-- Pantalla de Carga Épica -->
     <div class="loading-screen" id="loadingScreen">
         <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP" class="loading-logo">
@@ -966,11 +1015,59 @@
     </footer>
 
     <script>
+        // ===== SISTEMA DE PARTÍCULAS =====
+        class ParticleSystem {
+            constructor() {
+                this.container = document.getElementById('particles-js');
+                this.particleCount = 50;
+                this.particles = [];
+                this.init();
+            }
+
+            init() {
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.createParticle();
+                }
+                
+                // Crear partículas continuamente
+                setInterval(() => {
+                    this.createParticle();
+                }, 300);
+            }
+
+            createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const startX = Math.random() * 100;
+                const floatX = (Math.random() - 0.5) * 200;
+                const duration = 8 + Math.random() * 6;
+                const delay = Math.random() * 2;
+                const size = 2 + Math.random() * 4;
+                
+                particle.style.cssText = `
+                    left: ${startX}%;
+                    bottom: -20px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    --float-x: ${floatX}px;
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                `;
+                
+                this.container.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+
         // ===== CONFIGURACIÓN DE DISCORD OAUTH =====
         const DISCORD_CONFIG = {
-            CLIENT_ID: 'TU_CLIENT_ID_AQUI', // Reemplaza con tu Client ID de Discord
-            REDIRECT_URI: window.location.origin + '/auth/callback', // URL de retorno
-            SCOPES: ['identify', 'guilds'] // Permisos solicitados
+            CLIENT_ID: '1425170360189456547',
+            REDIRECT_URI: 'https://comisaria-virtual-carabinero-chilenos-rp.onrender.com/',
+            SCOPES: ['identify', 'guilds']
         };
 
         // ===== GESTIÓN DE SESIÓN =====
@@ -1004,11 +1101,19 @@
                 const params = new URLSearchParams({
                     client_id: DISCORD_CONFIG.CLIENT_ID,
                     redirect_uri: DISCORD_CONFIG.REDIRECT_URI,
-                    response_type: 'token',
+                    response_type: 'code',
                     scope: DISCORD_CONFIG.SCOPES.join(' '),
-                    state: type // 'user' o 'funcionario'
+                    state: type
                 });
                 return `https://discord.com/api/oauth2/authorize?${params}`;
+            }
+
+            static async exchangeCode(code) {
+                // NOTA: Esto debe hacerse en el backend por seguridad
+                // Este es solo un ejemplo del flujo
+                console.log('Código recibido:', code);
+                alert('Código de autorización recibido. Necesitas un backend para intercambiarlo por un token de acceso.');
+                return null;
             }
 
             static async getUserInfo(accessToken) {
@@ -1028,12 +1133,10 @@
                 }
             }
 
-            static parseTokenFromURL() {
-                const hash = window.location.hash.substring(1);
-                const params = new URLSearchParams(hash);
+            static parseCodeFromURL() {
+                const params = new URLSearchParams(window.location.search);
                 return {
-                    accessToken: params.get('access_token'),
-                    tokenType: params.get('token_type'),
+                    code: params.get('code'),
                     state: params.get('state')
                 };
             }
@@ -1118,6 +1221,9 @@
 
         // ===== INICIALIZACIÓN =====
         window.addEventListener('load', async function() {
+            // Inicializar sistema de partículas
+            new ParticleSystem();
+
             // Animación de carga
             const loadingScreen = document.getElementById('loadingScreen');
             const loadingBar = document.getElementById('loadingBar');
@@ -1135,40 +1241,40 @@
                 loadingBar.style.width = progress + '%';
             }, 200);
 
-            // Verificar si hay token en la URL (callback de Discord)
-            if (window.location.hash.includes('access_token')) {
-                const { accessToken, state } = DiscordAuth.parseTokenFromURL();
+            // Verificar si hay código en la URL (callback de Discord)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('code')) {
+                const code = urlParams.get('code');
+                const state = urlParams.get('state');
                 
-                if (accessToken) {
-                    // Guardar token
-                    SessionManager.saveToken(accessToken);
-                    
-                    // Obtener información del usuario
-                    const userInfo = await DiscordAuth.getUserInfo(accessToken);
-                    
-                    if (userInfo) {
-                        const userData = {
-                            id: userInfo.id,
-                            username: userInfo.username,
-                            discriminator: userInfo.discriminator,
-                            avatar: userInfo.avatar,
-                            isOfficer: state === 'funcionario'
-                        };
-                        
-                        SessionManager.saveUser(userData);
-                        
-                        // Limpiar la URL
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                    }
-                }
-            }
-
-            // Verificar sesión existente
-            const currentUser = SessionManager.getUser();
-            if (currentUser) {
-                UIManager.renderLoggedIn(currentUser);
+                console.log('Código de OAuth recibido:', code);
+                console.log('Tipo de login:', state);
+                
+                // IMPORTANTE: Aquí necesitas enviar el código a tu backend
+                // El backend debe intercambiarlo por un access_token
+                alert(`¡Autenticación exitosa!\n\nCódigo recibido: ${code.substring(0, 20)}...\n\nAhora necesitas un backend (Node.js, Python, PHP, etc.) para intercambiar este código por un token de acceso.\n\n¿Necesitas ayuda para configurar el backend?`);
+                
+                // Limpiar la URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // Por ahora, simulamos un usuario logueado para demo
+                const demoUser = {
+                    id: '123456789',
+                    username: 'Usuario Demo',
+                    discriminator: '0001',
+                    avatar: null,
+                    isOfficer: state === 'funcionario'
+                };
+                SessionManager.saveUser(demoUser);
+                UIManager.renderLoggedIn(demoUser);
             } else {
-                UIManager.renderLoggedOut();
+                // Verificar sesión existente
+                const currentUser = SessionManager.getUser();
+                if (currentUser) {
+                    UIManager.renderLoggedIn(currentUser);
+                } else {
+                    UIManager.renderLoggedOut();
+                }
             }
         });
 
