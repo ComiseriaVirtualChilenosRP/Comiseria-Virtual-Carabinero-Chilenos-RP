@@ -43,7 +43,7 @@ app.get('/auth/user', (req, res) => {
         scope: DISCORD_CONFIG.SCOPES.join(' '),
         state: 'user'
     });
-    res.redirect(`https://discord.com/api/oauth2/authorize?${params}`);
+    res.redirect(`https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2Fauth%2Fcallback&scope=identify+guilds${params}`);
 });
 
 // Iniciar login como Funcionario
