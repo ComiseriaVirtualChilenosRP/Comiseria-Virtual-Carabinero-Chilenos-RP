@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=3.0" name="viewport">
+
+    <!-- Meta tags personalizados para Comisaría Virtual -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Comisaría Virtual CHRPCM">
+    <meta property="og:title" content="Comisaría Virtual - Autorización">
+    <meta property="og:description" content="Autoriza a Comisaría Virtual CHRPCM para acceder a tu cuenta de Discord">
+    <meta property="og:image" content="https://i.imgur.com/oEuyEhc.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@chilenosrp">
+    <meta name="twitter:creator" content="@chilenosrp">
+
+    <script>
+        window.GLOBAL_ENV = {
+            "NODE_ENV": "production",
+            "PRIMARY_DOMAIN": "comiseria-virtual-carabinero-chilenos-rp.onrender.com",
+            "API_ENDPOINT": "//discord.com/api",
+            "GATEWAY_ENDPOINT": "wss://gateway.discord.gg",
+            "CDN_HOST": "cdn.discordapp.com",
+            "INVITE_HOST": "discord.gg"
+        };
+    </script>
+
+    <title>Autorizar - Comisaría Virtual CHRPCM</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #36393f;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-container {
+            background: #2f3136;
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #006b3f, #00a859);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: #b9bbbe;
+            font-size: 1rem;
+        }
+
+        .user-info {
+            background: #40444b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .not-you {
+            color: #00aff4;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .permissions {
+            background: #40444b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .permission-checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #72767d;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .permission-checkbox.checked {
+            background: #5865f2;
+            border-color: #5865f2;
+        }
+
+        .permission-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+        }
+
+        .redirect-info {
+            color: #b9bbbe;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .auth-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 3px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #72767d;
+        }
+
+        .btn-cancel:hover {
+            background: #4f545c;
+        }
+
+        .btn-authorize {
+            background: #5865f2;
+            color: #ffffff;
+        }
+
+        .btn-authorize:hover {
+            background: #4752c4;
+        }
+
+        .scroll-hint {
+            text-align: center;
+            color: #72767d;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #72767d;
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .auth-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+    
+    <link rel="icon" href="https://i.imgur.com/oEuyEhc.png">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="app-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1 class="auth-title">Comisaría Virtual CHRPCM</h1>
+            <p class="auth-subtitle">quiere acceder a tu cuenta de Discord</p>
+        </div>
+
+        <div class="user-info">
+            <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="user-avatar" id="userAvatar">
+            <div class="user-details">
+                <div class="username" id="username">Cargando...</div>
+                <div class="not-you" onclick="switchAccount()">¿No eres tú?</div>
+            </div>
+        </div>
+
+        <div class="permissions">
+            <p>Esto le permitirá a Comisaría Virtual CHRPCM hacer lo siguiente:</p>
+            <div class="permission-item">
+                <div class="permission-checkbox checked"></div>
+                <span>Acceder a tu nombre de usuario, avatar y cartel</span>
+            </div>
+            <div class="permission-item">
+                <div class="permission-checkbox checked"></div>
+                <span>Saber en qué servidores estás</span>
+            </div>
+            <div class="permission-item">
+                <div class="permission-checkbox"></div>
+                <span>Leer tu información de miembro de los servidores</span>
+            </div>
+            <div class="permission-item">
+                <div class="permission-checkbox checked"></div>
+                <span>Resolver un enigma con Scooby y la pandilla</span>
+            </div>
+        </div>
+
+        <p class="redirect-info">
+            Una vez que nos des tu autorización, te redirigiremos fuera de Discord a la siguiente página:<br>
+            https://comiseria-virtual-carabinero-chilenos-rp.onrender.com
+        </p>
+
+        <div class="auth-actions">
+            <button class="auth-btn btn-cancel" onclick="cancelAuth()">Cancelar</button>
+            <button class="auth-btn btn-authorize" onclick="authorizeApp()">Autorizar</button>
+        </div>
+
+        <div class="scroll-hint">
+            <i class="fas fa-chevron-down"></i> Sigue desplazándote...
+        </div>
+
+        <div class="footer">
+            Al autorizar, aceptas los <a href="#">Términos de Servicio</a> y la <a href="#">Política de Privacidad</a> de Comisaría Virtual CHRPCM.
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+    <script>
+        // Simular datos del usuario (en una implementación real esto vendría de Discord)
+        let currentUser = {
+            username: "danilocuevas912",
+            avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
+            discriminator: "1234"
+        };
+
+        function loadUserData() {
+            document.getElementById('username').textContent = currentUser.username;
+            document.getElementById('userAvatar').src = currentUser.avatar;
+        }
+
+        function switchAccount() {
+            // En una implementación real, esto redirigiría a Discord para cambiar de cuenta
+            const avatars = [
+                "https://cdn.discordapp.com/embed/avatars/0.png",
+                "https://cdn.discordapp.com/embed/avatars/1.png",
+                "https://cdn.discordapp.com/embed/avatars/2.png"
+            ];
+            
+            const usernames = [
+                "danilocuevas912",
+                "usuario_ejemplo",
+                "carabinero_rp"
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * avatars.length);
+            currentUser.avatar = avatars[randomIndex];
+            currentUser.username = usernames[randomIndex];
+            
+            loadUserData();
+        }
+
+        function cancelAuth() {
+            // Redirigir de vuelta a la aplicación principal
+            window.location.href = '/';
+        }
+
+        function authorizeApp() {
+            const authorizeBtn = document.querySelector('.btn-authorize');
+            
+            // Mostrar animación de carga
+            authorizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Autorizando...';
+            authorizeBtn.disabled = true;
+            
+            // Simular proceso de autorización
+            setTimeout(() => {
+                // En una implementación real, aquí se procesaría el código de autorización
+                // y se redirigiría al callback con el token
+                
+                // Redirigir al callback con un código simulado
+                const authCode = 'simulated_auth_code_' + Math.random().toString(36).substr(2, 9);
+                window.location.href = `/auth/user/callback?code=${authCode}`;
+            }, 2000);
+        }
+
+        // Cargar datos del usuario al iniciar
+        document.addEventListener('DOMContentLoaded', loadUserData);
+
+        // Manejar la tecla Escape para cancelar
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                cancelAuth();
+            }
+        });
+
+        // Simular scroll infinito (como hace Discord)
+        let scrollCount = 0;
+        const scrollHint = document.querySelector('.scroll-hint');
+
+        function checkScroll() {
+            scrollCount++;
+            if (scrollCount > 2) {
+                scrollHint.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('touchmove', checkScroll);
+
+        // Inicializar
+        checkScroll();
+    </script>
+</body>
+</html>
