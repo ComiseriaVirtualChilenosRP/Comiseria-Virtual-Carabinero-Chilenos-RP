@@ -1,0 +1,96 @@
+// auth.js
+const express = require('express');
+const router = express.Router();
+const axios = require('axios');
+
+// Configuración de Discord OAuth2
+const DISCORD_CLIENT_ID = '1425170360189456547';
+const DISCORD_CLIENT_SECRET = 'tu_client_secret_aqui';
+const DISCORD_REDIRECT_URI = 'https://comiseria-virtual-carabinero-chilenos-rp.onrender.com/auth/user/callback';
+const DISCORD_SCOPES = 'identify guilds';
+
+// Ruta /auth/user - Redirige a Discord OAuth2
+router.get('/user', (req, res) => {
+    const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=${DISCORD_SCOPES}`;
+    res.redirect(discordAuthUrl);
+});
+
+// Ruta de callback después de la autorización
+router.get('/user/callback', async (req, res) => {
+    try {
+        const { code } = req.query;
+        
+        if (!code) {
+            return res.redirect('/?error=no_code');
+        }
+
+        // Intercambiar código por token de acceso
+        const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', 
+            new URLSearchParams({
+                client_id: DISCORD_CLIENT_ID,
+                client_secret: DISCORD_CLIENT_SECRET,
+                grant_type: 'authorization_code',
+                code: code,
+                redirect_uri: DISCORD_REDIRECT_URI,
+                scope: DISCORD_SCOPES
+            }), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+        );
+
+        const { access_token, token_type } = tokenResponse.data;
+
+        // Obtener información del usuario
+        const userResponse = await axios.get('https://discord.com/api/users/@me', {
+            headers: {
+                authorization: `${token_type} ${access_token}`
+            }
+        });
+
+        const userData = userResponse.data;
+
+        // Obtener servidores del usuario
+        const guildsResponse = await axios.get('https://discord.com/api/users/@me/guilds', {
+            headers: {
+                authorization: `${token_type} ${access_token}`
+            }
+        });
+
+        const userGuilds = guildsResponse.data;
+
+        // Crear sesión de usuario
+        req.session.user = {
+            id: userData.id,
+            username: userData.username,
+            discriminator: userData.discriminator,
+            avatar: userData.avatar ? 
+                `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : 
+                `https://cdn.discordapp.com/embed/avatars/${userData.discriminator % 5}.png`,
+            role: 'usuario',
+            loggedIn: true,
+            accessToken: access_token,
+            guilds: userGuilds
+        };
+
+        // Redirigir a la página principal con sesión iniciada
+        res.redirect('/');
+
+    } catch (error) {
+        console.error('Error en callback de Discord:', error);
+        res.redirect('/?error=auth_failed');
+    }
+});
+
+// Ruta para cerrar sesión
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error al cerrar sesión:', err);
+        }
+        res.redirect('/');
+    });
+});
+
+module.exports = router;
