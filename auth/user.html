@@ -2,29 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=3.0" name="viewport">
-
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Discord">
-    <meta property="og:title" content="Discord - Group Chat That's All Fun & Games">
-    <meta property="og:description" content="Discord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.">
-    <meta property="og:image" content="https://cdn.discordapp.com/assets/og_img_discord_home.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@discord">
-    <meta name="twitter:creator" content="@discord">
-
-    <script>
-        window.GLOBAL_ENV = {
-            "NODE_ENV": "production",
-            "PRIMARY_DOMAIN": "discord.com",
-            "API_ENDPOINT": "//discord.com/api",
-            "GATEWAY_ENDPOINT": "wss://gateway.discord.gg",
-            "CDN_HOST": "cdn.discordapp.com"
-        };
-    </script>
-
-    <title>Discord</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorizar - Comisaría Virtual</title>
     <style>
         * {
             margin: 0;
@@ -191,26 +170,6 @@
             color: #72767d;
             font-size: 12px;
         }
-
-        .scroll-hint {
-            text-align: center;
-            color: #72767d;
-            font-size: 12px;
-            margin-top: 16px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-5px);
-            }
-            60% {
-                transform: translateY(-3px);
-            }
-        }
     </style>
 </head>
 <body>
@@ -226,7 +185,7 @@
             <div class="user-info">
                 <div class="avatar"></div>
                 <div class="user-details">
-                    <div class="username">Cargando usuario...</div>
+                    <div class="username">Iniciar sesión en Discord</div>
                     <div class="not-you" onclick="switchUser()">¿No eres tú?</div>
                 </div>
             </div>
@@ -244,15 +203,11 @@
                 <div class="permission-checkbox checked"></div>
                 <span>Saber en qué servidores estás</span>
             </div>
-            <div class="permission-item">
-                <div class="permission-checkbox"></div>
-                <span>Leer tu información de miembro de los servidores</span>
-            </div>
         </div>
 
         <div style="color: #b9bbbe; font-size: 12px; text-align: center; margin-bottom: 20px;">
-            Una vez que nos des tu autorización, te redirigiremos fuera de Discord a la siguiente página:<br>
-            https://comisaria-virtual-chrpcm.onrender.com
+            Una vez que nos des tu autorización, te redirigiremos a:<br>
+            https://comiseria-virtual-carabinero-chilenos-rp.onrender.com
         </div>
 
         <div class="auth-buttons">
@@ -260,18 +215,14 @@
             <button class="auth-button btn-authorize" onclick="authorizeApp()">Autorizar</button>
         </div>
 
-        <div class="scroll-hint">
-            <div>▼ Sigue desplazándote...</div>
-        </div>
-
         <div class="footer">
-            La Política de Privacidad y las Condiciones del Servicio del desarrollador de Comisaría Virtual CHRPCM se aplican a esta aplicación.
+            Al autorizar, aceptas los Términos de Servicio y Política de Privacidad
         </div>
     </div>
 
     <script>
         // URL REAL de Discord OAuth2
-        const DISCORD_OAUTH_URL = "https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds";
+        const DISCORD_OAUTH_URL = "https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2Fauth%2Fcallback&scope=identify+guilds";
 
         function authorizeApp() {
             // Redirige DIRECTAMENTE a Discord OAuth2 REAL
@@ -279,35 +230,12 @@
         }
 
         function cancelAuth() {
-            // Regresa a la página principal
             window.location.href = '/';
         }
 
         function switchUser() {
-            // En una implementación real, esto abriría el selector de cuentas de Discord
-            alert("En Discord real, esto te permitiría cambiar de cuenta");
+            alert("Serás redirigido a Discord para cambiar de cuenta");
         }
-
-        // Simular el comportamiento de scroll de Discord
-        let scrollCount = 0;
-        const scrollHint = document.querySelector('.scroll-hint');
-
-        function checkScroll() {
-            scrollCount++;
-            if (scrollCount > 2) {
-                scrollHint.style.display = 'none';
-            }
-        }
-
-        window.addEventListener('scroll', checkScroll);
-        window.addEventListener('touchmove', checkScroll);
-
-        // Manejar tecla Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                cancelAuth();
-            }
-        });
     </script>
 </body>
 </html>
