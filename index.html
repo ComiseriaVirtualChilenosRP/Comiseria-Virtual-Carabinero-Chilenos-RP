@@ -1,623 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Comisaría Virtual Épica - Chile Roleplay</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2331/2331961.png">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comisaría Virtual - ChilenosRP</title>
+    <link rel="icon" type="image/png" href="https://cdn.glitch.global/8935babc-c8a6-4a5b-bca7-b36c836aaf8e/Logo_I_Carabineros.webp?v=1746938516697">
     <style>
-        :root {
-            --primary: #0066cc;
-            --secondary: #003366;
-            --accent: #00aaff;
-            --gold: #ffd700;
-            --dark: #0f1a2e;
-            --darker: #0a1425;
-            --darkest: #050c1a;
-            --light: #e6f7ff;
-            --success: #00cc66;
-            --warning: #ffaa00;
-            --danger: #ff4444;
-            --animation-speed: 0.4s;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Rajdhani', sans-serif;
+        }
+
+        :root {
+            --verde-carabinero: #006b3f;
+            --verde-claro: #00a859;
+            --verde-oscuro: #004d2e;
+            --blanco: #ffffff;
+            --gris-oscuro: #1a1a1a;
+            --gris-medio: #2d2d2d;
         }
 
         body {
-            background: linear-gradient(135deg, var(--darkest) 0%, var(--darker) 50%, var(--dark) 100%);
-            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gris-oscuro);
+            color: var(--blanco);
             overflow-x: hidden;
-            min-height: 100vh;
-            scroll-behavior: smooth;
         }
 
-        /* FONDO CON PARTÍCULAS */
-        #particles-js {
+        /* Fondo Animado Épico */
+        .animated-bg {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
-            z-index: -1;
-        }
-
-        /* HEADER ÉPICO */
-        .epic-header {
-            background: rgba(10, 20, 40, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 3px solid var(--primary);
-            box-shadow: 0 8px 50px rgba(0, 102, 204, 0.8);
-            position: fixed;
             width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a1f1a 0%, #1a1a1a 50%, #0d2820 100%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 168, 89, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 107, 63, 0.2) 0%, transparent 50%);
+            animation: bgMove 25s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-80px, -80px) rotate(8deg); }
+        }
+
+        /* Partículas Flotantes */
+        .particles {
+            position: fixed;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 168, 89, 0.4);
+            border-radius: 50%;
+            animation: float linear infinite;
+            box-shadow: 0 0 20px rgba(0, 168, 89, 0.6);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header Épico */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
-            transition: all 0.4s ease;
-        }
-
-        .epic-header.scrolled {
-            background: rgba(5, 15, 30, 0.98);
-            padding: 8px 0;
-            box-shadow: 0 15px 60px rgba(0, 102, 204, 0.9);
-        }
-
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
+            background: rgba(0, 107, 63, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--verde-claro);
+            box-shadow: 0 4px 30px rgba(0, 168, 89, 0.3);
+            padding: 1.2rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-carabineros {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 30px rgba(0, 102, 204, 0.8);
-            animation: logoRotate 20s linear infinite;
-        }
-
-        @keyframes logoRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .header-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradientFlow 4s ease infinite;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .header-center {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .logo-nuevo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
-            animation: logoPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            font-weight: 700;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: white;
-            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.5);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.7);
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: rgba(10, 20, 40, 0.95);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            min-width: 200px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .btn-login-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px 20px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-login-option:hover {
-            background: rgba(0, 102, 204, 0.3);
-        }
-
-        /* HERO ÉPICO */
-        .epic-hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-top: 80px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            padding: 40px;
-            z-index: 2;
-        }
-
-        .hero-content h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4.5rem;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradientFlow 3s ease infinite;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            color: var(--light);
-            line-height: 1.6;
-        }
-
-        .hero-button {
-            display: inline-block;
-            padding: 18px 35px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: white;
-            text-decoration: none;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.5);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .hero-button:hover::before {
-            left: 100%;
-        }
-
-        .hero-button:hover {
-            transform: translateY(-8px) scale(1.1);
-            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.7);
-            filter: brightness(1.2);
-        }
-
-        /* SECCIONES ÉPICAS */
-        .epic-section {
-            padding: 100px 40px;
-            position: relative;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            text-align: center;
-            margin-bottom: 40px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradientFlow 3s ease infinite;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .section-subtitle {
-            font-size: 1.6rem;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #ccccff;
-            font-weight: 600;
-        }
-
-        @keyframes gradientFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* SECCIÓN QUIÉNES SOMOS */
-        .about-section {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(30px);
-            border-radius: 30px;
-            padding: 70px 40px;
-            margin: 0 auto 60px auto;
-            max-width: 1200px;
-            border: 2px solid rgba(0, 102, 204, 0.5);
-            box-shadow: 0 25px 70px rgba(0, 102, 204, 0.4);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .about-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .about-container {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .about-content {
-            flex: 1;
-        }
-
-        .features-list {
-            list-style: none;
-            margin-top: 30px;
-        }
-
-        .features-list li {
-            margin: 15px 0;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .features-list i {
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .about-image {
-            flex: 1;
-            text-align: center;
-        }
-
-        .about-image img {
-            max-width: 100%;
-            border-radius: 20px;
-            border: 3px solid var(--primary);
-            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.5);
-            transition: all 0.4s ease;
-        }
-
-        .about-image img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 50px rgba(0, 102, 204, 0.7);
-        }
-
-        /* SECCIÓN TRÁMITES */
-        .tramites-section {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(30px);
-            border-radius: 30px;
-            padding: 70px 40px;
-            margin: 0 auto 60px auto;
-            max-width: 1200px;
-            border: 2px solid rgba(0, 102, 204, 0.5);
-            box-shadow: 0 25px 70px rgba(0, 102, 204, 0.4);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .tramites-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .filter-buttons button {
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 102, 204, 0.5);
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-buttons button:hover, .filter-buttons button.active {
-            background: rgba(0, 102, 204, 0.3);
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
-        }
-
-        /* CARDS ÉPICAS */
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid transparent;
-            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.2);
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .card.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 25px 60px rgba(0, 102, 204, 0.4);
-            border-color: var(--primary);
-        }
-
-        .card-icon-wrapper {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 20px;
-            transition: all 0.4s ease;
-            color: var(--primary);
-        }
-
-        .card:hover .card-icon-wrapper {
-            transform: scale(1.2) rotate(5deg);
-            filter: drop-shadow(0 0 10px currentColor);
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            text-align: center;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .card p {
-            text-align: center;
-            color: #ccccff;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .card button {
-            display: block;
-            width: 100%;
-            padding: 12px 20px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: white;
-            text-align: center;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 15px;
-        }
-
-        .card button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
-        }
-
-        /* GALERÍA ÉPICA */
-        .gallery-section {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(30px);
-            border-radius: 30px;
-            padding: 70px 40px;
-            margin: 0 auto 60px auto;
-            max-width: 1200px;
-            border: 2px solid rgba(0, 102, 204, 0.5);
-            box-shadow: 0 25px 70px rgba(0, 102, 204, 0.4);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .gallery-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: all 0.4s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 102, 204, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-overlay i {
-            font-size: 2.5rem;
-            color: white;
-        }
-
-        /* MODALES ÉPICOS */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(26, 26, 46, 0.98);
-            backdrop-filter: blur(30px);
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 3px solid var(--primary);
-            box-shadow: 0 30px 80px rgba(0, 102, 204, 0.6);
-            position: relative;
-            animation: slideDown 0.4s ease;
+            animation: slideDown 0.8s ease-out;
         }
 
         @keyframes slideDown {
@@ -631,148 +120,768 @@
             }
         }
 
-        .close-modal {
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeInLeft 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .logo-carabineros {
+            height: 50px;
+            filter: drop-shadow(0 0 10px rgba(0, 168, 89, 0.5));
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(0, 168, 89, 0.5));
+            }
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 20px rgba(0, 168, 89, 0.8));
+            }
+        }
+
+        .header-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--blanco);
+            text-shadow: 0 0 20px rgba(0, 168, 89, 0.8);
+            letter-spacing: 1px;
+        }
+
+        .header-center img {
+            height: 45px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
+            color: var(--blanco);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 168, 89, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInRight 1s ease-out 0.7s both;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .btn-primary::before {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 68, 68, 0.2);
-            border: 2px solid var(--danger);
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 168, 89, 0.6);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: rgba(0, 77, 46, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--verde-claro);
+            border-radius: 15px;
+            padding: 1rem;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 40px rgba(0, 168, 89, 0.3);
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .btn-login-option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            color: var(--blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            border: 1px solid transparent;
+        }
+
+        .btn-login-option:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-login-option:hover {
+            background: var(--verde-claro);
+            border-color: var(--blanco);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 168, 89, 0.4);
+        }
+
+        .btn-login-option i {
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section Épico */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://i.imgur.com/uuFoJUB.png') center/cover;
+            background-attachment: fixed;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 77, 46, 0.9), rgba(26, 26, 26, 0.8));
+            animation: overlayPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes overlayPulse {
+            0%, 100% {
+                background: linear-gradient(135deg, rgba(0, 77, 46, 0.9), rgba(26, 26, 26, 0.8));
+            }
+            50% {
+                background: linear-gradient(135deg, rgba(0, 107, 63, 0.85), rgba(13, 40, 32, 0.85));
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            animation: heroAppear 1.2s ease-out;
+        }
+
+        @keyframes heroAppear {
+            from {
+                transform: translateY(50px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--blanco), var(--verde-claro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 30px rgba(0, 168, 89, 0.5);
+            animation: titleGlow 3s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(0, 168, 89, 0.6));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(0, 168, 89, 1));
+            }
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.3s both;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
+            color: var(--blanco);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 40px rgba(0, 168, 89, 0.5);
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease-out 0.6s both, buttonFloat 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+
+        @keyframes buttonFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 15px 50px rgba(0, 168, 89, 0.7);
+        }
+
+        /* Sección Quiénes Somos */
+        .about-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--gris-oscuro), var(--gris-medio));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 168, 89, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-content {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--verde-claro), var(--blanco));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 107, 63, 0.2);
+            border-left: 4px solid var(--verde-claro);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .features-list li:nth-child(1) { animation-delay: 0.1s; }
+        .features-list li:nth-child(2) { animation-delay: 0.2s; }
+        .features-list li:nth-child(3) { animation-delay: 0.3s; }
+
+        .features-list li:hover {
+            transform: translateX(10px);
+            background: rgba(0, 168, 89, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 168, 89, 0.3);
+        }
+
+        .features-list i {
+            color: var(--verde-claro);
+            font-size: 1.5rem;
+        }
+
+        .about-image {
+            animation: slideInRight 1s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 168, 89, 0.4);
+            border: 3px solid var(--verde-claro);
+            transition: all 0.5s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 30px 80px rgba(0, 168, 89, 0.6);
+        }
+
+        /* Sección de Trámites */
+        .section {
+            padding: 6rem 2rem 3rem;
+            text-align: center;
+            background: var(--gris-oscuro);
+        }
+
+        .section h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--verde-claro), var(--blanco));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .section > p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        /* Filtros */
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .filter-buttons button {
+            padding: 0.8rem 2rem;
+            background: rgba(0, 107, 63, 0.3);
+            color: var(--blanco);
+            border: 2px solid var(--verde-carabinero);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-buttons button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--verde-claro);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .filter-buttons button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-buttons button:hover {
+            border-color: var(--verde-claro);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(0, 168, 89, 0.5);
+        }
+
+        .filter-buttons button.active {
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
+            border-color: var(--verde-claro);
+            box-shadow: 0 5px 25px rgba(0, 168, 89, 0.5);
+        }
+
+        /* Cards de Trámites */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(0, 77, 46, 0.4), rgba(45, 45, 45, 0.6));
+            border: 2px solid rgba(0, 168, 89, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: cardAppear 0.6s ease-out both;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes cardAppear {
+            from {
+                transform: translateY(50px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 168, 89, 0.1) 0%, transparent 70%);
+            transition: all 0.8s ease;
+            transform: scale(0);
+        }
+
+        .card:hover::before {
+            transform: scale(1) rotate(180deg);
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: var(--verde-claro);
+            box-shadow: 0 20px 60px rgba(0, 168, 89, 0.4);
+            background: linear-gradient(135deg, rgba(0, 107, 63, 0.6), rgba(45, 45, 45, 0.7));
+        }
+
+        .card-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--danger);
-            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 168, 89, 0.5);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
         }
 
-        .close-modal:hover {
-            background: var(--danger);
-            color: white;
-            transform: rotate(90deg) scale(1.1);
+        .card:hover .card-icon-wrapper {
+            transform: rotateY(360deg) scale(1.2);
+            box-shadow: 0 15px 40px rgba(0, 168, 89, 0.7);
         }
 
-        .modal-content h2 {
-            font-family: 'Orbitron', sans-serif;
+        .card-icon-wrapper i {
             font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradientFlow 3s ease infinite;
+            color: var(--blanco);
         }
 
-        .form-group {
-            margin-bottom: 25px;
+        .card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--verde-claro);
+            position: relative;
+            z-index: 2;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--light);
+        .card p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
         }
 
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 102, 204, 0.3);
-            border-radius: 10px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 102, 204, 0.5);
-            outline: none;
-        }
-
-        .form-group div {
-            margin: 8px 0;
-        }
-
-        .form-group input[type="radio"], .form-group input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
-        .modal-content button[type="submit"] {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: white;
+        .card button {
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
+            color: var(--blanco);
             border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.1rem;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
         }
 
-        .modal-content button[type="submit"]:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
+        .card button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        /* LIGHTBOX ÉPICO */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .card button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .card button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 168, 89, 0.6);
+        }
+
+        /* Galería */
+        .gallery-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--gris-oscuro), var(--gris-medio));
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-section .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        .gallery-section .section-subtitle {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.8s ease-out both;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .gallery-item img {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
+            object-fit: cover;
+            transition: all 0.5s ease;
         }
 
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 15px;
-            border: 3px solid var(--primary);
-            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.7);
-        }
-
-        .lightbox-close {
+        .gallery-overlay {
             position: absolute;
-            top: 30px;
-            right: 30px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 107, 63, 0.9), rgba(0, 168, 89, 0.9));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-overlay i {
             font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: var(--blanco);
+            transform: scale(0);
+            transition: all 0.5s ease;
         }
 
-        .lightbox-close:hover {
-            color: var(--danger);
-            transform: scale(1.2);
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(0, 168, 89, 0.5);
         }
 
-        /* FOOTER ÉPICO */
-        .epic-footer {
-            background: rgba(10, 20, 40, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 3px solid var(--primary);
-            box-shadow: 0 -8px 50px rgba(0, 102, 204, 0.8);
-            padding: 60px 0 30px;
+        .gallery-item:hover img {
+            transform: scale(1.2) rotate(3deg);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item:hover .gallery-overlay i {
+            transform: scale(1) rotate(360deg);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--verde-oscuro);
+            padding: 3rem 2rem 2rem;
+            border-top: 3px solid var(--verde-claro);
+            animation: fadeIn 1s ease-out;
         }
 
         .footer-container {
@@ -780,19 +889,19 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            padding: 0 40px;
+            gap: 3rem;
+            margin-bottom: 2rem;
         }
 
         .footer-col h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
+            color: var(--verde-claro);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         .footer-col p {
-            color: #ccccff;
+            color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
         }
 
@@ -801,408 +910,351 @@
         }
 
         .footer-col ul li {
-            margin: 10px 0;
+            margin-bottom: 0.8rem;
         }
 
         .footer-col ul li a {
-            color: #ccccff;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .footer-col ul li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
+            color: var(--verde-claro);
+            transform: translateX(5px);
         }
 
         .social-links {
             display: flex;
-            gap: 15px;
+            gap: 1rem;
         }
 
         .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 168, 89, 0.3);
+            border: 2px solid var(--verde-claro);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 102, 204, 0.2);
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
+            color: var(--blanco);
+            font-size: 1.3rem;
+            transition: all 0.4s ease;
         }
 
         .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.4);
+            background: var(--verde-claro);
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 8px 20px rgba(0, 168, 89, 0.6);
         }
 
         .footer-bottom {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ccccff;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 168, 89, 0.3);
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        /* TOAST NOTIFICATIONS */
-        .toast-container {
+        /* Modal Login */
+        .modal {
+            display: none;
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 4000;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
         }
 
-        .toast {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--success);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0, 204, 102, 0.5);
-            transform: translateX(400px);
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-width: 350px;
+        .modal.active {
+            display: flex;
         }
 
-        .toast.show {
-            transform: translateX(0);
+        .modal-content {
+            background: linear-gradient(135deg, rgba(0, 77, 46, 0.95), rgba(45, 45, 45, 0.95));
+            border: 2px solid var(--verde-claro);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: modalSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 60px rgba(0, 168, 89, 0.5);
         }
 
-        .toast-icon {
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.5) translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--blanco);
             font-size: 2rem;
-            color: var(--success);
-            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--verde-claro);
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            color: var(--verde-claro);
+            margin-bottom: 2rem;
+            font-size: 2rem;
             text-align: center;
         }
 
-        .toast-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            text-align: center;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .toast-message {
-            color: #ccccff;
-            text-align: center;
+        .form-group label {
+            display: block;
+            color: var(--blanco);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        /* RESPONSIVE */
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(0, 168, 89, 0.3);
+            border-radius: 10px;
+            color: var(--blanco);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--verde-claro);
+            box-shadow: 0 0 20px rgba(0, 168, 89, 0.3);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 20px;
+            .hero h1 {
+                font-size: 2.5rem;
             }
 
-            .hero-content h1 {
-                font-size: 3rem;
+            .hero p {
+                font-size: 1.1rem;
             }
 
             .about-container {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
             }
 
             .filter-buttons {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
             }
 
-            .card-container {
-                grid-template-columns: 1fr;
+            header {
+                padding: 1rem;
+                flex-wrap: wrap;
             }
 
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
+            .header-text {
+                font-size: 1.2rem;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <!-- FONDO CON PARTÍCULAS -->
-    <div id="particles-js"></div>
+    <div class="animated-bg"></div>
+    
+    <div class="particles" id="particles"></div>
 
-    <!-- HEADER ÉPICO -->
-    <header class="epic-header" id="navbar">
-        <div class="header-container">
-            <div class="header-left">
-                <img class="logo-carabineros" src="https://cdn-icons-png.flaticon.com/512/2331/2331961.png" alt="Logo Carabineros">
-                <span class="header-text">Comisaría Virtual Épica</span>
-            </div>
-            <div class="header-center">
-                <img class="logo-nuevo" src="https://cdn-icons-png.flaticon.com/512/2331/2331961.png" alt="Logo del Servidor">
-            </div>
-            <div class="header-right" id="session-controls">
-                <div class="dropdown" title="Ingresar">
-                    <button class="btn btn-primary">Ingresar al Sistema</button>
-                    <div class="dropdown-content login-options">
-                        <a href="/auth/user" class="btn-login-option">
-                            <i class="fas fa-user"></i> Como Usuario
-                        </a>
-                        <a href="/auth/discord" class="btn-login-option">
-                            <i class="fas fa-user-shield"></i> Como Funcionario
-                        </a>
-                    </div>
+    <header>
+        <div class="header-left">
+            <img class="logo-carabineros" src="https://comisariavirtual.cl/assets/img/logos/logo.png" alt="Logo Carabineros">
+            <span class="header-text">Comisaría Virtual</span>
+        </div>
+        <div class="header-center">
+            <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP">
+        </div>
+        <div class="header-right">
+            <div class="dropdown">
+                <button class="btn-primary">Ingresar</button>
+                <div class="dropdown-content login-options">
+                    <a href="#" class="btn-login-option" onclick="loginUsuario(event)">
+                        <i class="fas fa-user"></i> Como Usuario
+                    </a>
+                    <a href="#" class="btn-login-option" onclick="loginFuncionario(event)">
+                        <i class="fas fa-user-shield"></i> Como Funcionario
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- HERO ÉPICO -->
-    <section class="epic-hero">
+    <div class="hero">
         <div class="hero-content">
-            <h1>COMISARÍA VIRTUAL ÉPICA</h1>
-            <p>Bienvenido al sistema de gestión policial más avanzado de Chile Roleplay Community. Realiza tus trámites de forma segura, rápida y con estilo futurista.</p>
-            <a href="#tramites" class="hero-button">Explorar Trámites Disponibles</a>
+            <h1>Bienvenidos</h1>
+            <p>Esta es la comisaría virtual de ChilenosRP. Aquí podrás realizar tus trámites de manera rápida y segura.</p>
+            <a href="#denuncias" class="hero-button">Iniciar trámites</a>
         </div>
-    </section>
+    </div>
 
-    <!-- SECCIÓN QUIÉNES SOMOS -->
-    <section id="quienes-somos" class="epic-section">
-        <div class="about-section">
-            <div class="about-container">
-                <div class="about-content">
-                    <h2 class="section-title">¿QUIÉNES SOMOS?</h2>
-                    <p class="section-subtitle">
-                        Somos Chile Roleplay Community, una comunidad dedicada a crear experiencias de roleplay inmersivas y de alta calidad. Nuestra Comisaría Virtual es una herramienta clave para facilitar la interacción entre los ciudadanos y nuestras fuerzas del orden.
-                    </p>
-                    <ul class="features-list">
-                        <li><i class="fas fa-check-circle"></i> Trámites 100% en línea con tecnología de vanguardia</li>
-                        <li><i class="fas fa-check-circle"></i> Interacción directa y segura con cifrado militar</li>
-                        <li><i class="fas fa-check-circle"></i> Comprometidos con un roleplay justo y realista</li>
-                        <li><i class="fas fa-check-circle"></i> Sistema de respuesta rápida las 24/7</li>
-                        <li><i class="fas fa-check-circle"></i> Interfaz futurista con efectos visuales impresionantes</li>
-                    </ul>
-                </div>
-                <div class="about-image">
-                    <img src="https://i.imgur.com/398Fhkf.png" alt="Imagen de la comunidad">
-                </div>
+    <section id="quienes-somos" class="about-section">
+        <div class="about-container">
+            <div class="about-content">
+                <h2 class="section-title">¿Quiénes Somos?</h2>
+                <p class="section-subtitle">
+                    Somos ChilenosRP, una comunidad dedicada a crear experiencias de roleplay inmersivas y de alta calidad. Nuestra Comisaría Virtual es una herramienta clave para facilitar la interacción entre los ciudadanos y nuestras fuerzas del orden.
+                </p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> Trámites 100% en línea.</li>
+                    <li><i class="fas fa-check-circle"></i> Interacción directa y segura.</li>
+                    <li><i class="fas fa-check-circle"></i> Comprometidos con un roleplay justo.</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="https://i.imgur.com/398Fhkf.png" alt="ChilenosRP Community">
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN TRÁMITES -->
-    <section id="tramites" class="epic-section">
-        <div class="tramites-section">
-            <h2 class="section-title">TRÁMITES Y DENUNCIAS</h2>
-            <p class="section-subtitle">Selecciona el trámite deseado y sigue las instrucciones. Nuestro sistema te guiará paso a paso.</p>
-            
-            <div class="filter-buttons">
-                <button data-filter="todos" class="active">Todos los Trámites</button>
-                <button data-filter="denuncia">Denuncias</button>
-                <button data-filter="informacion">Información Anónima</button>
-                <button data-filter="actuar">Actuar Policial</button>
-            </div>
-
-            <div class="card-container">
-                <div class="card" data-category="denuncia">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-car-burst"></i>
-                    </div>
-                    <h3>Robo de Vehículo</h3>
-                    <p>Denuncia el robo de tu automóvil u otro vehículo motorizado con nuestro sistema de rastreo avanzado.</p>
-                    <button data-modal-id="modal-robo-vehiculo">Iniciar Trámite Épico</button>
-                </div>
-
-                <div class="card" data-category="informacion">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-user-secret"></i>
-                    </div>
-                    <h3>Crimen Organizado</h3>
-                    <p>Entrega información anónima sobre tenencia ilegal de arma, robos, homicidios y secuestros con total seguridad.</p>
-                    <button data-modal-id="modal-crimen-organizado">Informar Anónimamente</button>
-                </div>
-
-                <div class="card" data-category="actuar">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-gavel"></i>
-                    </div>
-                    <h3>Queja contra Funcionarios</h3>
-                    <p>Envía una queja formal sobre el actuar de algún funcionario policial con nuestro sistema de seguimiento.</p>
-                    <button data-modal-id="modal-queja-funcionario">Presentar Queja</button>
-                </div>
-
-                <div class="card" data-category="denuncia">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-hand-lizard"></i>
-                    </div>
-                    <h3>Hurto Simple</h3>
-                    <p>Apropiación de cosa mueble ajena sin violencia o intimidación. Reporta con nuestro sistema automatizado.</p>
-                    <button data-modal-id="modal-hurto-simple">Denunciar Hurto</button>
-                </div>
-
-                <div class="card" data-category="denuncia">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-house-damage"></i>
-                    </div>
-                    <h3>Hurto Agravado</h3>
-                    <p>Hurto con abuso de confianza u otras agravantes. Nuestro sistema prioriza estos casos.</p>
-                    <button data-modal-id="modal-hurto-agravado">Denuncia Agravada</button>
-                </div>
-
-                <div class="card" data-category="informacion">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-eye-slash"></i>
-                    </div>
-                    <h3>Información Anónima</h3>
-                    <p>Informa sobre tráfico o consumo ilegal de drogas de manera anónima con cifrado de alta seguridad.</p>
-                    <button data-modal-id="modal-informacion-anonima">Informar Confidencialmente</button>
-                </div>
-                
-                <div class="card" data-category="actuar">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <h3>Felicitaciones</h3>
-                    <p>Reconoce públicamente el buen actuar de Carabineros. Tu reconocimiento será destacado.</p>
-                    <button data-modal-id="modal-felicitaciones">Enviar Felicitación</button>
-                </div>
-
-                <div class="card" data-category="denuncia">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Protección Ciudadana</h3>
-                    <p>Solicita medidas de protección especiales para tu seguridad personal o familiar.</p>
-                    <button data-modal-id="modal-proteccion">Solicitar Protección</button>
-                </div>
-            </div>
+    <section id="denuncias" class="section">
+        <h2>Realiza tus Denuncias y Trámites</h2>
+        <p>Selecciona el trámite deseado y sigue las instrucciones.</p>
+        <div class="filter-buttons">
+            <button data-filter="todos" class="active">Todos</button>
+            <button data-filter="denuncia">Denuncias</button>
+            <button data-filter="informacion">Información Anónima</button>
+            <button data-filter="actuar">Actuar Policial</button>
         </div>
     </section>
 
-    <!-- GALERÍA ÉPICA -->
-    <section id="galeria" class="epic-section">
-        <div class="gallery-section">
-            <h2 class="section-title">POSTALES ÉPICAS</h2>
-            <p class="section-subtitle">Imágenes que capturan el espíritu y la dedicación de nuestras fuerzas del orden en acción.</p>
+    <div class="card-container">
+        <div class="card" data-category="denuncia">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-car-burst"></i>
+            </div>
+            <h3>Robo de Vehículo</h3>
+            <p>Denuncia el robo de tu automóvil u otro vehículo motorizado.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+
+        <div class="card" data-category="informacion">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <h3>Crimen Organizado</h3>
+            <p>Entrega información anónima sobre tenencia ilegal de arma, robos, homicidios y secuestros.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+
+        <div class="card" data-category="actuar">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-gavel"></i>
+            </div>
+            <h3>Queja contra Funcionarios</h3>
+            <p>Envía una queja formal sobre el actuar de algún funcionario policial.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+
+        <div class="card" data-category="denuncia">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-hand-lizard"></i>
+            </div>
+            <h3>Hurto Simple</h3>
+            <p>Apropiación de cosa mueble ajena sin violencia o intimidación.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+
+        <div class="card" data-category="denuncia">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-house-damage"></i>
+            </div>
+            <h3>Hurto Agravado</h3>
+            <p>Hurto con abuso de confianza u otras agravantes.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+
+        <div class="card" data-category="informacion">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-eye-slash"></i>
+            </div>
+            <h3>Información Anónima</h3>
+            <p>Informa sobre tráfico o consumo ilegal de drogas de manera anónima.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+
+        <div class="card" data-category="actuar">
+            <div class="card-icon-wrapper">
+                <i class="fas fa-award"></i>
+            </div>
+            <h3>Felicitaciones</h3>
+            <p>Reconoce públicamente el buen actuar de Carabineros.</p>
+            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+        </div>
+    </div>
+
+    <section id="galeria" class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Postales de Nuestra Comunidad</h2>
+            <p class="section-subtitle">Imágenes que capturan el espíritu y la dedicación de nuestras fuerzas del orden.</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://i.imgur.com/uuFoJUB.png" alt="Postal de la comunidad 1">
+                    <img src="https://i.imgur.com/uuFoJUB.png" alt="Postal ChilenosRP 1">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.imgur.com/2UelIPj.png" alt="Postal de la comunidad 2">
+                    <img src="https://i.imgur.com/2UelIPj.png" alt="Postal ChilenosRP 2">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.imgur.com/8RnLql1.png" alt="Postal de la comunidad 3">
+                    <img src="https://i.imgur.com/8RnLql1.png" alt="Postal ChilenosRP 3">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.imgur.com/Hfxf15a.png" alt="Postal de la comunidad 4">
+                    <img src="https://i.imgur.com/Hfxf15a.png" alt="Postal ChilenosRP 4">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- MODALES -->
-    <div id="modal-robo-vehiculo" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-robo-title">
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Cerrar formulario">&times;</button>
-            <h2 id="modal-robo-title">Denuncia Asociada a Vehículos</h2>
-            <form id="form-robo" data-form-id="roboVehiculo" novalidate>
-                <div class="form-group">
-                    <label for="nombreRobo">Tu Nombre Completo</label>
-                    <input type="text" id="nombreRobo" name="nombreCompleto" class="form-control" placeholder="Ej: Juan Pérez" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="rutRobo">Tu RUT</label>
-                    <input type="text" id="rutRobo" name="rut" class="form-control" placeholder="Ej: 12.345.678-9" required />
-                </div>
-                
-                <div class="form-group">
-                    <label for="tipoDenunciaVehicular">Tipo de denuncia</label>
-                    <select id="tipoDenunciaVehicular" name="tipoDenuncia" class="form-control" required>
-                        <option value="">Seleccione una opción</option>
-                        <option value="Robo de Vehículo">Robo de Vehículo</option>
-                        <option value="Venta de Repuestos Robados">Venta de Repuestos Robados</option>
-                        <option value="Ubicación de Vehículo Robado">Ubicación de Vehículo Robado</option>
-                    </select>
-                </div>
-
-                <div id="campos-robo-especifico" style="display: none;">
-                    <div class="form-group">
-                        <label for="patenteVehiculo">Patente del vehículo hurtado</label>
-                        <input type="text" id="patenteVehiculo" name="patente" class="form-control" placeholder="Ej: ABCD-12" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="colorVehiculo">Color del vehículo hurtado</label>
-                        <input type="text" id="colorVehiculo" name="colorVehiculo" class="form-control" placeholder="Ej: Rojo" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="marcaModeloVehiculo">Marca y Modelo del vehículo hurtado</label>
-                        <input type="text" id="marcaModeloVehiculo" name="marcaModeloVehiculo" class="form-control" placeholder="Ej: Toyota Yaris" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>¿Hubo testigos?</label>
-                    <div><label><input type="radio" name="testigos" value="si" required> Sí</label></div>
-                    <div><label><input type="radio" name="testigos" value="no" required> No</label></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="direccion">Dirección del Incidente</label>
-                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Donde ocurrió el hecho" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="fecha">Fecha del Incidente</label>
-                    <input type="date" id="fecha" name="fecha" class="form-control" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="descripcion">Descripción Adicional</label>
-                    <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="Describa detalles relevantes del hecho" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="adjuntar">Adjuntar archivos (evidencia)</label>
-                    <input type="file" id="adjuntar" name="evidencia" accept="image/*,application/pdf" />
-                </div>
-
-                <button type="submit">Enviar Denuncia</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Más modales aquí (se mantienen igual que en el código original) -->
-
-    <!-- LIGHTBOX -->
-    <div id="lightbox-modal" class="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightbox-image">
-    </div>
-
-    <!-- TOAST CONTAINER -->
-    <div id="toast-container" class="toast-container"></div>
-
-    <!-- FOOTER ÉPICO -->
-    <footer class="epic-footer">
+    <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
-                <h4>Comisaría Virtual Épica</h4>
-                <p>Una iniciativa revolucionaria de Chile Roleplay Community para mejorar la interacción y el roleplay de calidad con tecnología de vanguardia.</p>
+                <h4>Comisaría Virtual</h4>
+                <p>Una iniciativa de ChilenosRP para mejorar la interacción y el roleplay de calidad.</p>
             </div>
             <div class="footer-col">
                 <h4>Enlaces Rápidos</h4>
                 <ul>
-                    <li><a href="#tramites">Realizar Trámite</a></li>
+                    <li><a href="#denuncias">Realizar Trámite</a></li>
                     <li><a href="#quienes-somos">¿Quiénes Somos?</a></li>
-                    <li><a href="#galeria">Postales Épicas</a></li>
-                    <li><a href="#">Política de Privacidad</a></li>
-                    <li><a href="#">Términos de Servicio</a></li>
+                    <li><a href="#galeria">Postales</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1211,298 +1263,106 @@
                     <a href="https://discord.gg/CPEWE7WgR4" aria-label="Discord"><i class="fab fa-discord"></i></a>
                     <a href="https://www.youtube.com/@chrpcm/featured" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     <a href="https://www.instagram.com/chrpcm.erlc/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Chile Roleplay Community. Todos los derechos reservados.<br>
+            <p>&copy; 2025 ChilenosRP. Todos los derechos reservados.<br>
             Diseño y desarrollo web por cristobal.dev — En colaboración con Overline Studios.</p>
         </div>
     </footer>
 
     <script>
-        // INICIALIZAR PARTÍCULAS
-        function initParticles() {
-            if (typeof particlesJS !== 'undefined') {
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { 
-                            value: 80, 
-                            density: { enable: true, value_area: 800 } 
-                        },
-                        color: { value: "#0066cc" },
-                        shape: { 
-                            type: "circle",
-                            stroke: { width: 0, color: "#000000" }
-                        },
-                        opacity: { 
-                            value: 0.3, 
-                            random: true,
-                            anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
-                        },
-                        size: { 
-                            value: 3, 
-                            random: true,
-                            anim: { enable: true, speed: 2, size_min: 0.5, sync: false }
-                        },
-                        line_linked: {
-                            enable: true,
-                            distance: 150,
-                            color: "#00aaff",
-                            opacity: 0.2,
-                            width: 1
-                        },
-                        move: {
-                            enable: true,
-                            speed: 1,
-                            direction: "none",
-                            random: true,
-                            straight: false,
-                            out_mode: "out",
-                            bounce: false,
-                            attract: { enable: false, rotateX: 600, rotateY: 1200 }
-                        }
-                    },
-                    interactivity: {
-                        detect_on: "canvas",
-                        events: {
-                            onhover: { enable: true, mode: "repulse" },
-                            onclick: { enable: true, mode: "push" },
-                            resize: true
-                        },
-                        modes: {
-                            repulse: { distance: 100, duration: 0.4 },
-                            push: { particles_nb: 2 }
-                        }
-                    },
-                    retina_detect: true
-                });
-            } else {
-                console.warn('particles.js not loaded');
+        // Crear partículas flotantes
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                particlesContainer.appendChild(particle);
             }
         }
 
-        // NAVBAR SCROLL EFFECT
-        function handleNavbarScroll() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        }
+        // Filtros de trámites
+        const filterButtons = document.querySelectorAll('.filter-buttons button');
+        const cards = document.querySelectorAll('.card');
 
-        // ANIMACIONES AL SCROLL
-        function handleScrollAnimations() {
-            const sections = document.querySelectorAll('.about-section, .tramites-section, .gallery-section');
-            const cards = document.querySelectorAll('.card');
-            
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
                 
-                if (sectionTop < windowHeight * 0.85) {
-                    section.classList.add('visible');
-                }
-            });
-            
-            cards.forEach((card, index) => {
-                const cardTop = card.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (cardTop < windowHeight * 0.85) {
-                    setTimeout(() => {
-                        card.classList.add('animated');
-                    }, index * 100);
-                }
-            });
-        }
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
 
-        // FILTRAR CARDS
-        function setupFilterButtons() {
-            const filterButtons = document.querySelectorAll('.filter-buttons button');
-            const cards = document.querySelectorAll('.card');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Remover clase activa de todos los botones
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Agregar clase activa al botón clickeado
-                    button.classList.add('active');
-                    
-                    const filter = button.getAttribute('data-filter');
-                    
-                    cards.forEach(card => {
-                        if (filter === 'todos' || card.getAttribute('data-category') === filter) {
+                cards.forEach(card => {
+                    if (filter === 'todos') {
+                        card.style.display = 'block';
+                    } else {
+                        if (card.getAttribute('data-category') === filter) {
                             card.style.display = 'block';
-                            setTimeout(() => {
-                                card.classList.add('animated');
-                            }, 100);
                         } else {
                             card.style.display = 'none';
                         }
+                    }
+                });
+            });
+        });
+
+        // Login functions
+        function loginUsuario(e) {
+            e.preventDefault();
+            window.location.href = 'https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fuser%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704';
+        }
+
+        function loginFuncionario(e) {
+            e.preventDefault();
+            window.location.href = 'https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704';
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
-                });
-            });
-        }
-
-        // MODALES
-        function setupModals() {
-            const modalButtons = document.querySelectorAll('.card button, .hero-button');
-            const modals = document.querySelectorAll('.modal');
-            const closeButtons = document.querySelectorAll('.close-modal');
-            
-            modalButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const modalId = button.getAttribute('data-modal-id');
-                    const modal = document.getElementById(modalId);
-                    if (modal) {
-                        modal.classList.add('active');
-                    }
-                });
-            });
-            
-            closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const modal = button.closest('.modal');
-                    modal.classList.remove('active');
-                });
-            });
-            
-            // Cerrar modal al hacer clic fuera
-            modals.forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-            });
-        }
-
-        // LIGHTBOX GALERÍA
-        function setupLightbox() {
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            const lightbox = document.getElementById('lightbox-modal');
-            const lightboxImg = document.getElementById('lightbox-image');
-            const lightboxClose = document.querySelector('.lightbox-close');
-            
-            galleryItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const imgSrc = item.querySelector('img').getAttribute('src');
-                    lightboxImg.setAttribute('src', imgSrc);
-                    lightbox.classList.add('active');
-                });
-            });
-            
-            lightboxClose.addEventListener('click', () => {
-                lightbox.classList.remove('active');
-            });
-            
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
                 }
             });
-        }
+        });
 
-        // TOAST NOTIFICATIONS
-        function showToast(title, message, type = 'success') {
-            const toastContainer = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            
-            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-            const color = type === 'success' ? 'var(--success)' : 'var(--warning)';
-            
-            toast.innerHTML = `
-                <div class="toast-icon">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <h3 class="toast-title">${title}</h3>
-                <p class="toast-message">${message}</p>
-            `;
-            
-            toast.style.borderColor = color;
-            toast.querySelector('.toast-icon i').style.color = color;
-            
-            toastContainer.appendChild(toast);
-            
-            // Mostrar toast
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
-            
-            // Ocultar y eliminar toast después de 5 segundos
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.remove();
-                }, 400);
-            }, 5000);
-        }
+        // Inicializar partículas
+        createParticles();
 
-        // FORM SUBMISSION
-        function setupForms() {
-            const forms = document.querySelectorAll('form');
-            
-            forms.forEach(form => {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
-                    // Simular envío exitoso
-                    const formId = form.getAttribute('data-form-id');
-                    const modal = form.closest('.modal');
-                    
-                    // Cerrar modal
-                    modal.classList.remove('active');
-                    
-                    // Mostrar toast de éxito
-                    showToast('TRÁMITE ENVIADO', 'Tu solicitud ha sido procesada exitosamente. Recibirás una respuesta pronto.', 'success');
-                    
-                    // Resetear formulario
-                    form.reset();
-                });
+        // Animación de scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
-        }
+        }, observerOptions);
 
-        // SMOOTH SCROLL
-        function setupSmoothScroll() {
-            const links = document.querySelectorAll('a[href^="#"]');
-            
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    const targetId = link.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        }
-
-        // INICIALIZAR TODO
-        document.addEventListener('DOMContentLoaded', function() {
-            initParticles();
-            setupFilterButtons();
-            setupModals();
-            setupLightbox();
-            setupForms();
-            setupSmoothScroll();
-            
-            window.addEventListener('scroll', function() {
-                handleNavbarScroll();
-                handleScrollAnimations();
-            });
-            
-            handleScrollAnimations();
+        document.querySelectorAll('.card, .gallery-item').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
