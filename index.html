@@ -94,93 +94,6 @@
             box-shadow: 0 0 10px rgba(0, 168, 89, 0.8);
         }
 
-        /* Indicador de carga al hacer scroll */
-        .scroll-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: transparent;
-            z-index: 1001;
-            display: none;
-        }
-
-        .scroll-loader-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--verde-claro), var(--verde-carabinero));
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 168, 89, 0.8);
-        }
-
-        .scroll-loader.active {
-            display: block;
-        }
-
-        /* Fondo Animado Épico */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #0a1f1a 0%, #1a1a1a 50%, #0d2820 100%);
-        }
-
-        .animated-bg::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 168, 89, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 107, 63, 0.2) 0%, transparent 50%);
-            animation: bgMove 25s ease-in-out infinite;
-        }
-
-        @keyframes bgMove {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-80px, -80px) rotate(8deg); }
-        }
-
-        /* Partículas Flotantes */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(0, 168, 89, 0.4);
-            border-radius: 50%;
-            animation: float linear infinite;
-            box-shadow: 0 0 20px rgba(0, 168, 89, 0.6);
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(1.5) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
         /* Header Épico */
         header {
             position: fixed;
@@ -263,7 +176,7 @@
             to { opacity: 1; }
         }
 
-        .btn-primary {
+        .btn {
             background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
             color: var(--blanco);
             border: none;
@@ -277,6 +190,13 @@
             position: relative;
             overflow: hidden;
             animation: fadeInRight 1s ease-out 0.7s both;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
         }
 
         @keyframes fadeInRight {
@@ -290,7 +210,7 @@
             }
         }
 
-        .btn-primary::before {
+        .btn::before {
             content: '';
             position: absolute;
             top: 50%;
@@ -303,18 +223,19 @@
             transition: width 0.6s, height 0.6s;
         }
 
-        .btn-primary:hover::before {
+        .btn:hover::before {
             width: 300px;
             height: 300px;
         }
 
-        .btn-primary:hover {
+        .btn:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 30px rgba(0, 168, 89, 0.6);
         }
 
         .dropdown {
             position: relative;
+            display: inline-block;
         }
 
         .dropdown-content {
@@ -332,6 +253,7 @@
             transform: translateY(-20px);
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             box-shadow: 0 10px 40px rgba(0, 168, 89, 0.3);
+            z-index: 1001;
         }
 
         .dropdown:hover .dropdown-content {
@@ -352,6 +274,7 @@
             font-weight: 500;
             margin-bottom: 0.5rem;
             border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-login-option:last-child {
@@ -409,144 +332,13 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
         }
 
         .btn-logout:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-        }
-
-        /* Panel de Perfil de Usuario */
-        .user-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 380px;
-            height: 100vh;
-            background: rgba(0, 77, 46, 0.98);
-            backdrop-filter: blur(20px);
-            border-left: 2px solid var(--verde-claro);
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .user-panel.active {
-            right: 0;
-        }
-
-        .user-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .user-panel-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--verde-claro);
-        }
-
-        .user-panel-close {
-            background: none;
-            border: none;
-            color: var(--blanco);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .user-panel-close:hover {
-            color: var(--verde-claro);
-            transform: rotate(90deg);
-        }
-
-        .user-profile {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .user-profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid var(--verde-claro);
-            margin: 0 auto 1rem;
-            object-fit: cover;
-            box-shadow: 0 0 20px rgba(0, 168, 89, 0.5);
-        }
-
-        .user-profile-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .user-profile-discriminator {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 1rem;
-        }
-
-        .user-profile-badge {
-            background: var(--verde-claro);
-            color: var(--blanco);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .user-servers {
-            margin-bottom: 2rem;
-        }
-
-        .user-servers-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--verde-claro);
-        }
-
-        .server-list {
-            list-style: none;
-        }
-
-        .server-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem;
-            margin-bottom: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .server-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-
-        .server-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .server-name {
-            font-weight: 500;
-        }
-
-        .server-member-count {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
         }
 
         /* Hero Section Épico */
@@ -568,16 +360,6 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, rgba(0, 77, 46, 0.9), rgba(26, 26, 26, 0.8));
-            animation: overlayPulse 10s ease-in-out infinite;
-        }
-
-        @keyframes overlayPulse {
-            0%, 100% {
-                background: linear-gradient(135deg, rgba(0, 77, 46, 0.9), rgba(26, 26, 26, 0.8));
-            }
-            50% {
-                background: linear-gradient(135deg, rgba(0, 107, 63, 0.85), rgba(13, 40, 32, 0.85));
-            }
         }
 
         .hero-content {
@@ -609,17 +391,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-shadow: 0 5px 30px rgba(0, 168, 89, 0.5);
-            animation: titleGlow 3s ease-in-out infinite;
             letter-spacing: 2px;
-        }
-
-        @keyframes titleGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 20px rgba(0, 168, 89, 0.6));
-            }
-            50% {
-                filter: drop-shadow(0 0 40px rgba(0, 168, 89, 1));
-            }
         }
 
         .hero p {
@@ -653,34 +425,10 @@
             font-size: 1.2rem;
             box-shadow: 0 10px 40px rgba(0, 168, 89, 0.5);
             transition: all 0.4s ease;
-            animation: fadeInUp 1s ease-out 0.6s both, buttonFloat 3s ease-in-out infinite;
+            animation: fadeInUp 1s ease-out 0.6s both;
             position: relative;
             overflow: hidden;
             letter-spacing: 1px;
-        }
-
-        @keyframes buttonFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .hero-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.7s;
-        }
-
-        .hero-button:hover::before {
-            left: 100%;
         }
 
         .hero-button:hover {
@@ -694,27 +442,6 @@
             background: linear-gradient(180deg, var(--gris-oscuro), var(--gris-medio));
             position: relative;
             overflow: hidden;
-        }
-
-        .about-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 168, 89, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 30s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(50px, 50px);
-            }
         }
 
         .about-container {
@@ -836,25 +563,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInScale 0.8s ease-out;
-        }
-
-        @keyframes fadeInScale {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
         }
 
         .section > p {
             font-size: 1.3rem;
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 3rem;
-            animation: fadeIn 1s ease-out 0.3s both;
         }
 
         /* Filtros */
@@ -864,7 +578,6 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-bottom: 4rem;
-            animation: fadeInUp 1s ease-out 0.5s both;
         }
 
         .filter-buttons button {
@@ -877,26 +590,6 @@
             font-weight: 600;
             transition: all 0.4s ease;
             font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .filter-buttons button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: var(--verde-claro);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s, height 0.5s;
-        }
-
-        .filter-buttons button:hover::before {
-            width: 300px;
-            height: 300px;
         }
 
         .filter-buttons button:hover {
@@ -931,42 +624,6 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            animation: cardAppear 0.6s ease-out both;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-        .card:nth-child(7) { animation-delay: 0.7s; }
-
-        @keyframes cardAppear {
-            from {
-                transform: translateY(50px) scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 168, 89, 0.1) 0%, transparent 70%);
-            transition: all 0.8s ease;
-            transform: scale(0);
-        }
-
-        .card:hover::before {
-            transform: scale(1) rotate(180deg);
         }
 
         .card:hover {
@@ -1030,24 +687,7 @@
             position: relative;
             z-index: 2;
             overflow: hidden;
-        }
-
-        .card button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .card button:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 100%;
         }
 
         .card button:hover {
@@ -1055,227 +695,11 @@
             box-shadow: 0 10px 30px rgba(0, 168, 89, 0.6);
         }
 
-        /* Galería */
-        .gallery-section {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, var(--gris-oscuro), var(--gris-medio));
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .gallery-section .section-title {
-            text-align: center;
-            margin-bottom: 1rem;
-            animation: fadeInScale 0.8s ease-out;
-        }
-
-        .gallery-section .section-subtitle {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            animation: fadeIn 1s ease-out 0.3s both;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.5s ease;
-            animation: fadeInUp 0.8s ease-out both;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
-        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
-        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
-        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.5s ease;
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 107, 63, 0.9), rgba(0, 168, 89, 0.9));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-
-        .gallery-overlay i {
-            font-size: 3rem;
-            color: var(--blanco);
-            transform: scale(0);
-            transition: all 0.5s ease;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 20px 50px rgba(0, 168, 89, 0.5);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.2) rotate(3deg);
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-item:hover .gallery-overlay i {
-            transform: scale(1) rotate(360deg);
-        }
-
-        /* Modal de Galería Épico */
-        .gallery-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease-out;
-            overflow: hidden;
-        }
-
-        .gallery-modal.active {
-            display: flex;
-        }
-
-        .gallery-modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            animation: modalZoomIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 0 50px rgba(0, 168, 89, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 3px solid var(--verde-claro);
-        }
-
-        @keyframes modalZoomIn {
-            from {
-                transform: scale(0.5) rotate(-10deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        .gallery-modal img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .gallery-modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--blanco);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2001;
-        }
-
-        .gallery-modal-close:hover {
-            background: var(--verde-claro);
-            transform: rotate(90deg) scale(1.1);
-        }
-
-        .gallery-modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--blanco);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2001;
-        }
-
-        .gallery-modal-prev {
-            left: 20px;
-        }
-
-        .gallery-modal-next {
-            right: 20px;
-        }
-
-        .gallery-modal-nav:hover {
-            background: var(--verde-claro);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .gallery-modal-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.8);
-            color: var(--blanco);
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.2rem;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-modal:hover .gallery-modal-caption {
-            transform: translateY(0);
-        }
-
         /* Footer */
         .site-footer {
             background: var(--verde-oscuro);
             padding: 3rem 2rem 2rem;
             border-top: 3px solid var(--verde-claro);
-            animation: fadeIn 1s ease-out;
         }
 
         .footer-container {
@@ -1351,51 +775,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Botón Discord */
-        .btn-discord {
-            background: var(--discord-blurple);
-            color: var(--blanco);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .btn-discord::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-discord:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-discord:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.6);
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -1427,28 +806,6 @@
             .header-text {
                 font-size: 1.2rem;
             }
-
-            .gallery-modal-content {
-                max-width: 95%;
-                max-height: 95%;
-            }
-
-            .gallery-modal-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .gallery-modal-close {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .user-panel {
-                width: 100%;
-                right: -100%;
-            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -1463,40 +820,6 @@
         </div>
     </div>
 
-    <!-- Indicador de carga al hacer scroll -->
-    <div class="scroll-loader" id="scrollLoader">
-        <div class="scroll-loader-bar"></div>
-    </div>
-
-    <div class="animated-bg"></div>
-    
-    <div class="particles" id="particles"></div>
-
-    <!-- Panel de Perfil de Usuario -->
-    <div class="user-panel" id="userPanel">
-        <div class="user-panel-header">
-            <h3 class="user-panel-title">Mi Perfil</h3>
-            <button class="user-panel-close" id="userPanelClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="user-profile" id="userProfile">
-            <!-- Se llenará dinámicamente con JavaScript -->
-        </div>
-        
-        <div class="user-servers" id="userServers">
-            <h4 class="user-servers-title">Servidores</h4>
-            <ul class="server-list" id="serverList">
-                <!-- Se llenará dinámicamente con JavaScript -->
-            </ul>
-        </div>
-        
-        <button class="btn-logout" onclick="logout()" style="width: 100%; margin-top: 2rem;">
-            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </button>
-    </div>
-
     <header>
         <div class="header-left">
             <img class="logo-carabineros" src="https://comisariavirtual.cl/assets/img/logos/logo.png" alt="Logo Carabineros">
@@ -1506,14 +829,13 @@
             <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP">
         </div>
         <div class="header-right">
-            <div class="dropdown" id="userDropdown">
-                <!-- Estado de usuario (se actualiza dinámicamente) -->
-                <button class="btn-primary" id="loginButton">Ingresar</button>
-                <div class="dropdown-content login-options" id="loginOptions">
-                    <a href="https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds" class="btn-login-option">
+            <div class="dropdown" title="Ingresar">
+                <button class="btn btn-primary">Ingresar</button>
+                <div class="dropdown-content login-options">
+                    <a href="/auth/user" class="btn-login-option">
                         <i class="fas fa-user"></i> Como Usuario
                     </a>
-                    <a href="https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds" class="btn-login-option">
+                    <a href="/auth/discord" class="btn-login-option">
                         <i class="fas fa-user-shield"></i> Como Funcionario
                     </a>
                 </div>
@@ -1624,48 +946,6 @@
         </div>
     </div>
 
-    <section id="galeria" class="gallery-section">
-        <div class="container">
-            <h2 class="section-title">Postales de Nuestra Comunidad</h2>
-            <p class="section-subtitle">Imágenes que capturan el espíritu y la dedicación de nuestras fuerzas del orden.</p>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-index="0">
-                    <img src="https://i.imgur.com/uuFoJUB.png" alt="Postal ChilenosRP 1">
-                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
-                </div>
-                <div class="gallery-item" data-index="1">
-                    <img src="https://i.imgur.com/2UelIPj.png" alt="Postal ChilenosRP 2">
-                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
-                </div>
-                <div class="gallery-item" data-index="2">
-                    <img src="https://i.imgur.com/8RnLql1.png" alt="Postal ChilenosRP 3">
-                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
-                </div>
-                <div class="gallery-item" data-index="3">
-                    <img src="https://i.imgur.com/Hfxf15a.png" alt="Postal ChilenosRP 4">
-                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal de Galería Épico -->
-    <div class="gallery-modal" id="galleryModal">
-        <button class="gallery-modal-close" id="galleryModalClose">
-            <i class="fas fa-times"></i>
-        </button>
-        <button class="gallery-modal-nav gallery-modal-prev" id="galleryModalPrev">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="gallery-modal-nav gallery-modal-next" id="galleryModalNext">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="gallery-modal-content">
-            <img id="galleryModalImg" src="" alt="">
-            <div class="gallery-modal-caption" id="galleryModalCaption"></div>
-        </div>
-    </div>
-
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
@@ -1696,10 +976,6 @@
     </footer>
 
     <script>
-        // Estado de sesión
-        let userLoggedIn = false;
-        let currentUser = null;
-
         // Pantalla de carga épica
         window.addEventListener('load', function() {
             const loadingScreen = document.getElementById('loadingScreen');
@@ -1716,221 +992,16 @@
                     // Ocultar pantalla de carga después de un breve retraso
                     setTimeout(() => {
                         loadingScreen.classList.add('hidden');
-                        
-                        // Inicializar animaciones después de cargar
-                        setTimeout(() => {
-                            initScrollAnimations();
-                        }, 500);
                     }, 500);
                 }
                 loadingBar.style.width = progress + '%';
             }, 200);
-
-            // Verificar si hay una sesión guardada
-            checkSavedSession();
-        });
-
-        // Verificar sesión guardada
-        function checkSavedSession() {
-            const savedUser = localStorage.getItem('chilenosrp_user');
-            if (savedUser) {
-                userLoggedIn = true;
-                currentUser = JSON.parse(savedUser);
-                updateUserInterface();
-            }
-        }
-
-        // Actualizar interfaz según estado de sesión
-        function updateUserInterface() {
-            const loginButton = document.getElementById('loginButton');
-            const loginOptions = document.getElementById('loginOptions');
-            
-            if (userLoggedIn && currentUser) {
-                loginButton.innerHTML = `
-                    <div class="user-status" onclick="openUserPanel()">
-                        <img src="${currentUser.avatar}" alt="Avatar" class="user-avatar">
-                        <div>
-                            <div class="user-name">${currentUser.username}</div>
-                            <div class="user-badge">${currentUser.role === 'funcionario' ? 'Funcionario' : 'Usuario'}</div>
-                        </div>
-                    </div>
-                `;
-                
-                loginOptions.innerHTML = `
-                    <a href="#" class="btn-login-option" onclick="openUserPanel()">
-                        <i class="fas fa-user"></i> Ver Mi Perfil
-                    </a>
-                    <a href="#" class="btn-login-option" onclick="viewGallery()">
-                        <i class="fas fa-images"></i> Ver Galería Completa
-                    </a>
-                    <a href="#" class="btn-login-option" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                    </a>
-                `;
-                
-                // Actualizar botones de trámites
-                document.querySelectorAll('.card button').forEach(button => {
-                    button.textContent = 'Iniciar Trámite';
-                    const cardTitle = button.closest('.card').querySelector('h3').textContent;
-                    button.onclick = function() {
-                        startTramite(cardTitle);
-                    };
-                });
-                
-                // Actualizar panel de usuario
-                updateUserPanel();
-            } else {
-                loginButton.textContent = 'Ingresar';
-                loginOptions.innerHTML = `
-                    <a href="https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds" class="btn-login-option">
-                        <i class="fas fa-user"></i> Como Usuario
-                    </a>
-                    <a href="https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds" class="btn-login-option">
-                        <i class="fas fa-user-shield"></i> Como Funcionario
-                    </a>
-                `;
-                
-                // Restaurar botones de trámites
-                document.querySelectorAll('.card button').forEach(button => {
-                    button.textContent = 'Debes iniciar sesión para realizar este trámite';
-                    const cardTitle = button.closest('.card').querySelector('h3').textContent;
-                    button.onclick = function() {
-                        checkLoginAndProceed(cardTitle);
-                    };
-                });
-            }
-        }
-
-        // Actualizar panel de usuario
-        function updateUserPanel() {
-            const userProfile = document.getElementById('userProfile');
-            const serverList = document.getElementById('serverList');
-            
-            if (userLoggedIn && currentUser) {
-                userProfile.innerHTML = `
-                    <img src="${currentUser.avatar}" alt="Avatar" class="user-profile-avatar">
-                    <h3 class="user-profile-name">${currentUser.username}</h3>
-                    <div class="user-profile-discriminator">#${currentUser.discriminator || '0000'}</div>
-                    <div class="user-profile-badge">${currentUser.role === 'funcionario' ? 'Funcionario' : 'Usuario'}</div>
-                `;
-                
-                // Mostrar servidores (simulados)
-                if (currentUser.servers && currentUser.servers.length > 0) {
-                    serverList.innerHTML = '';
-                    currentUser.servers.forEach(server => {
-                        const serverItem = document.createElement('li');
-                        serverItem.className = 'server-item';
-                        serverItem.innerHTML = `
-                            <img src="${server.icon || 'https://cdn.discordapp.com/embed/avatars/0.png'}" alt="${server.name}" class="server-icon">
-                            <div>
-                                <div class="server-name">${server.name}</div>
-                                <div class="server-member-count">${server.memberCount || '0'} miembros</div>
-                            </div>
-                        `;
-                        serverList.appendChild(serverItem);
-                    });
-                } else {
-                    serverList.innerHTML = '<li style="text-align: center; color: rgba(255,255,255,0.7);">No se encontraron servidores</li>';
-                }
-            }
-        }
-
-        // Abrir panel de usuario
-        function openUserPanel() {
-            if (userLoggedIn) {
-                document.getElementById('userPanel').classList.add('active');
-            }
-        }
-
-        // Cerrar panel de usuario
-        document.getElementById('userPanelClose').addEventListener('click', function() {
-            document.getElementById('userPanel').classList.remove('active');
         });
 
         // Verificar login antes de proceder
         function checkLoginAndProceed(tramiteName) {
-            if (!userLoggedIn) {
-                // Redirigir a Discord OAuth para usuarios
-                window.location.href = "https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds";
-            } else {
-                startTramite(tramiteName);
-            }
-        }
-
-        // Iniciar trámite (simulado)
-        function startTramite(tramiteName) {
-            alert(`Iniciando trámite: ${tramiteName}\n\nRol: ${currentUser.role}\n\n(Esta sería la página del formulario real)`);
-        }
-
-        // Cerrar sesión
-        function logout() {
-            userLoggedIn = false;
-            currentUser = null;
-            localStorage.removeItem('chilenosrp_user');
-            updateUserInterface();
-            document.getElementById('userPanel').classList.remove('active');
-            showNotification('Sesión cerrada correctamente.');
-        }
-
-        // Ver galería completa (solo para usuarios logueados)
-        function viewGallery() {
-            if (userLoggedIn) {
-                showNotification('¡Disfruta de nuestra galería completa!');
-                // Aquí podrías mostrar una galería extendida o más imágenes
-            } else {
-                // Redirigir a Discord OAuth para usuarios
-                window.location.href = "https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds";
-            }
-        }
-
-        // Mostrar notificación
-        function showNotification(message) {
-            // Crear elemento de notificación
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 10px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-                z-index: 3000;
-                animation: slideInRight 0.5s ease-out;
-                max-width: 300px;
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            // Remover después de 5 segundos
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.5s ease-in forwards';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 500);
-            }, 5000);
-        }
-
-        // Crear partículas flotantes
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 4 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                
-                particlesContainer.appendChild(particle);
-            }
+            // Redirigir a Discord OAuth para usuarios
+            window.location.href = "/auth/user";
         }
 
         // Filtros de trámites
@@ -1958,77 +1029,6 @@
             });
         });
 
-        // Galería modal épica
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        const galleryModal = document.getElementById('galleryModal');
-        const galleryModalImg = document.getElementById('galleryModalImg');
-        const galleryModalCaption = document.getElementById('galleryModalCaption');
-        const galleryModalClose = document.getElementById('galleryModalClose');
-        const galleryModalPrev = document.getElementById('galleryModalPrev');
-        const galleryModalNext = document.getElementById('galleryModalNext');
-
-        let currentImageIndex = 0;
-
-        // Abrir modal de galería
-        galleryItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                currentImageIndex = index;
-                openGalleryModal();
-            });
-        });
-
-        function openGalleryModal() {
-            const currentImage = galleryItems[currentImageIndex];
-            const imgSrc = currentImage.querySelector('img').src;
-            const imgAlt = currentImage.querySelector('img').alt;
-            
-            galleryModalImg.src = imgSrc;
-            galleryModalCaption.textContent = imgAlt;
-            galleryModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Cerrar modal de galería
-        galleryModalClose.addEventListener('click', () => {
-            galleryModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        // Navegación de galería
-        galleryModalPrev.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
-            openGalleryModal();
-        });
-
-        galleryModalNext.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
-            openGalleryModal();
-        });
-
-        // Cerrar modal con tecla Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (galleryModal.classList.contains('active')) {
-                    galleryModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-                if (document.getElementById('userPanel').classList.contains('active')) {
-                    document.getElementById('userPanel').classList.remove('active');
-                }
-            }
-        });
-
-        // Navegación con teclas
-        document.addEventListener('keydown', (e) => {
-            if (galleryModal.classList.contains('active')) {
-                if (e.key === 'ArrowLeft') {
-                    galleryModalPrev.click();
-                } else if (e.key === 'ArrowRight') {
-                    galleryModalNext.click();
-                }
-            }
-        });
-
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -2042,104 +1042,6 @@
                 }
             });
         });
-
-        // Indicador de carga al hacer scroll
-        const scrollLoader = document.getElementById('scrollLoader');
-        const scrollLoaderBar = scrollLoader.querySelector('.scroll-loader-bar');
-        let scrollTimeout;
-
-        window.addEventListener('scroll', () => {
-            scrollLoader.classList.add('active');
-            scrollLoaderBar.style.width = '100%';
-            
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                scrollLoaderBar.style.width = '0%';
-                setTimeout(() => {
-                    scrollLoader.classList.remove('active');
-                }, 300);
-            }, 300);
-        });
-
-        // Animaciones al hacer scroll
-        function initScrollAnimations() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        
-                        // Efecto adicional para las cards
-                        if (entry.target.classList.contains('card')) {
-                            entry.target.style.animation = 'cardAppear 0.6s ease-out forwards';
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.card, .gallery-item, .about-content, .about-image').forEach(el => {
-                observer.observe(el);
-            });
-        }
-
-        // Inicializar partículas
-        createParticles();
-
-        // Añadir animación para notificaciones
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Simular datos de usuario para demostración
-        // En una implementación real, estos datos vendrían de la API de Discord
-        function simulateUserData() {
-            if (!localStorage.getItem('chilenosrp_user')) {
-                const demoUser = {
-                    username: "danilocuevas912",
-                    discriminator: "1234",
-                    avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
-                    role: "usuario",
-                    servers: [
-                        {
-                            name: "ChilenosRP Oficial",
-                            icon: "https://i.imgur.com/oEuyEhc.png",
-                            memberCount: 1500
-                        },
-                        {
-                            name: "Comunidad Gamer",
-                            icon: null,
-                            memberCount: 800
-                        },
-                        {
-                            name: "Roleplay Chile",
-                            icon: "https://cdn.discordapp.com/icons/1234567890/abcdefg.png",
-                            memberCount: 1200
-                        }
-                    ]
-                };
-                localStorage.setItem('chilenosrp_user', JSON.stringify(demoUser));
-                checkSavedSession();
-            }
-        }
-
-        // Ejecutar simulación de datos (solo para demostración)
-        simulateUserData();
     </script>
 </body>
 </html>
