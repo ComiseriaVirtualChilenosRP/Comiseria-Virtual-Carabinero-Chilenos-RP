@@ -28,6 +28,95 @@
             overflow-x: hidden;
         }
 
+        /* Pantalla de Carga Épica */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gris-oscuro);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            animation: logoPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(0, 168, 89, 0.8));
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(0, 168, 89, 0.8));
+            }
+            50% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 30px rgba(0, 168, 89, 1));
+            }
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--verde-claro);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--verde-claro), var(--verde-carabinero));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 168, 89, 0.8);
+        }
+
+        /* Indicador de carga al hacer scroll */
+        .scroll-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1001;
+            display: none;
+        }
+
+        .scroll-loader-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--verde-claro), var(--verde-carabinero));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 168, 89, 0.8);
+        }
+
+        .scroll-loader.active {
+            display: block;
+        }
+
         /* Fondo Animado Épico */
         .animated-bg {
             position: fixed;
@@ -876,6 +965,130 @@
             transform: scale(1) rotate(360deg);
         }
 
+        /* Modal de Galería Épico */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        .gallery-modal.active {
+            display: flex;
+        }
+
+        .gallery-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: modalZoomIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 50px rgba(0, 168, 89, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--verde-claro);
+        }
+
+        @keyframes modalZoomIn {
+            from {
+                transform: scale(0.5) rotate(-10deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .gallery-modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .gallery-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--blanco);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .gallery-modal-close:hover {
+            background: var(--verde-claro);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .gallery-modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--blanco);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .gallery-modal-prev {
+            left: 20px;
+        }
+
+        .gallery-modal-next {
+            right: 20px;
+        }
+
+        .gallery-modal-nav:hover {
+            background: var(--verde-claro);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-modal-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--blanco);
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-modal:hover .gallery-modal-caption {
+            transform: translateY(0);
+        }
+
         /* Footer */
         .site-footer {
             background: var(--verde-oscuro);
@@ -1083,11 +1296,42 @@
             .header-text {
                 font-size: 1.2rem;
             }
+
+            .gallery-modal-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+
+            .gallery-modal-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .gallery-modal-close {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+    <!-- Pantalla de Carga Épica -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP" class="loading-logo">
+        <div class="loading-text">Cargando Comisaría Virtual...</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+    </div>
+
+    <!-- Indicador de carga al hacer scroll -->
+    <div class="scroll-loader" id="scrollLoader">
+        <div class="scroll-loader-bar"></div>
+    </div>
+
     <div class="animated-bg"></div>
     
     <div class="particles" id="particles"></div>
@@ -1223,25 +1467,42 @@
             <h2 class="section-title">Postales de Nuestra Comunidad</h2>
             <p class="section-subtitle">Imágenes que capturan el espíritu y la dedicación de nuestras fuerzas del orden.</p>
             <div class="gallery-grid">
-                <div class="gallery-item">
+                <div class="gallery-item" data-index="0">
                     <img src="https://i.imgur.com/uuFoJUB.png" alt="Postal ChilenosRP 1">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-index="1">
                     <img src="https://i.imgur.com/2UelIPj.png" alt="Postal ChilenosRP 2">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-index="2">
                     <img src="https://i.imgur.com/8RnLql1.png" alt="Postal ChilenosRP 3">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
-                <div class="gallery-item">
+                <div class="gallery-item" data-index="3">
                     <img src="https://i.imgur.com/Hfxf15a.png" alt="Postal ChilenosRP 4">
                     <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal de Galería Épico -->
+    <div class="gallery-modal" id="galleryModal">
+        <button class="gallery-modal-close" id="galleryModalClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="gallery-modal-nav gallery-modal-prev" id="galleryModalPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="gallery-modal-nav gallery-modal-next" id="galleryModalNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="gallery-modal-content">
+            <img id="galleryModalImg" src="" alt="">
+            <div class="gallery-modal-caption" id="galleryModalCaption"></div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="footer-container">
@@ -1273,6 +1534,33 @@
     </footer>
 
     <script>
+        // Pantalla de carga épica
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingBar = document.getElementById('loadingBar');
+            
+            // Simular progreso de carga
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Ocultar pantalla de carga después de un breve retraso
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        
+                        // Inicializar animaciones después de cargar
+                        setTimeout(() => {
+                            initScrollAnimations();
+                        }, 500);
+                    }, 500);
+                }
+                loadingBar.style.width = progress + '%';
+            }, 200);
+        });
+
         // Crear partículas flotantes
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -1318,6 +1606,72 @@
             });
         });
 
+        // Galería modal épica
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const galleryModal = document.getElementById('galleryModal');
+        const galleryModalImg = document.getElementById('galleryModalImg');
+        const galleryModalCaption = document.getElementById('galleryModalCaption');
+        const galleryModalClose = document.getElementById('galleryModalClose');
+        const galleryModalPrev = document.getElementById('galleryModalPrev');
+        const galleryModalNext = document.getElementById('galleryModalNext');
+
+        let currentImageIndex = 0;
+
+        // Abrir modal de galería
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentImageIndex = index;
+                openGalleryModal();
+            });
+        });
+
+        function openGalleryModal() {
+            const currentImage = galleryItems[currentImageIndex];
+            const imgSrc = currentImage.querySelector('img').src;
+            const imgAlt = currentImage.querySelector('img').alt;
+            
+            galleryModalImg.src = imgSrc;
+            galleryModalCaption.textContent = imgAlt;
+            galleryModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Cerrar modal de galería
+        galleryModalClose.addEventListener('click', () => {
+            galleryModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Navegación de galería
+        galleryModalPrev.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+            openGalleryModal();
+        });
+
+        galleryModalNext.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+            openGalleryModal();
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && galleryModal.classList.contains('active')) {
+                galleryModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Navegación con teclas
+        document.addEventListener('keydown', (e) => {
+            if (galleryModal.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') {
+                    galleryModalPrev.click();
+                } else if (e.key === 'ArrowRight') {
+                    galleryModalNext.click();
+                }
+            }
+        });
+
         // Login functions
         function loginUsuario(e) {
             e.preventDefault();
@@ -1343,27 +1697,52 @@
             });
         });
 
+        // Indicador de carga al hacer scroll
+        const scrollLoader = document.getElementById('scrollLoader');
+        const scrollLoaderBar = scrollLoader.querySelector('.scroll-loader-bar');
+        let scrollTimeout;
+
+        window.addEventListener('scroll', () => {
+            scrollLoader.classList.add('active');
+            scrollLoaderBar.style.width = '100%';
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                scrollLoaderBar.style.width = '0%';
+                setTimeout(() => {
+                    scrollLoader.classList.remove('active');
+                }, 300);
+            }, 300);
+        });
+
+        // Animaciones al hacer scroll
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // Efecto adicional para las cards
+                        if (entry.target.classList.contains('card')) {
+                            entry.target.style.animation = 'cardAppear 0.6s ease-out forwards';
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.card, .gallery-item, .about-content, .about-image').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
         // Inicializar partículas
         createParticles();
-
-        // Animación de scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.card, .gallery-item').forEach(el => {
-            observer.observe(el);
-        });
     </script>
 </body>
 </html>
