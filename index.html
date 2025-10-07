@@ -19,6 +19,7 @@
             --blanco: #ffffff;
             --gris-oscuro: #1a1a1a;
             --gris-medio: #2d2d2d;
+            --discord-blurple: #5865F2;
         }
 
         body {
@@ -366,6 +367,53 @@
 
         .btn-login-option i {
             font-size: 1.2rem;
+        }
+
+        /* Estado de usuario */
+        .user-status {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--blanco);
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--verde-claro);
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-badge {
+            background: var(--verde-claro);
+            color: var(--blanco);
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--blanco);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         /* Hero Section Épico */
@@ -1089,6 +1137,198 @@
             transform: translateY(0);
         }
 
+        /* Modal de Autorización Discord */
+        .discord-auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .discord-auth-modal.active {
+            display: flex;
+        }
+
+        .discord-auth-content {
+            background: #36393f;
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 480px;
+            width: 90%;
+            animation: modalSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .discord-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .discord-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: var(--discord-blurple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .discord-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .discord-subtitle {
+            color: #b9bbbe;
+            font-size: 1rem;
+        }
+
+        .discord-user-info {
+            background: #2f3136;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .discord-user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .discord-user-details {
+            flex: 1;
+        }
+
+        .discord-username {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .discord-not-you {
+            color: #00aff4;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .discord-permissions {
+            background: #2f3136;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .discord-permission-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .discord-permission-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .discord-permission-checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #72767d;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .discord-permission-checkbox.checked {
+            background: var(--discord-blurple);
+            border-color: var(--discord-blurple);
+        }
+
+        .discord-permission-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+        }
+
+        .discord-redirect {
+            color: #b9bbbe;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .discord-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .discord-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 3px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .discord-btn-cancel {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #72767d;
+        }
+
+        .discord-btn-cancel:hover {
+            background: #4f545c;
+        }
+
+        .discord-btn-authorize {
+            background: var(--discord-blurple);
+            color: #ffffff;
+        }
+
+        .discord-btn-authorize:hover {
+            background: #4752c4;
+        }
+
+        .discord-scroll-hint {
+            text-align: center;
+            color: #72767d;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
         /* Footer */
         .site-footer {
             background: var(--verde-oscuro);
@@ -1170,104 +1410,9 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Modal Login */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, rgba(0, 77, 46, 0.95), rgba(45, 45, 45, 0.95));
-            border: 2px solid var(--verde-claro);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            animation: modalSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 20px 60px rgba(0, 168, 89, 0.5);
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: scale(0.5) translateY(-100px);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: var(--blanco);
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: var(--verde-claro);
-            transform: rotate(90deg);
-        }
-
-        .modal h2 {
-            color: var(--verde-claro);
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--blanco);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(0, 168, 89, 0.3);
-            border-radius: 10px;
-            color: var(--blanco);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--verde-claro);
-            box-shadow: 0 0 20px rgba(0, 168, 89, 0.3);
-        }
-
         /* Botón Discord */
         .btn-discord {
-            background: #5865F2;
+            background: var(--discord-blurple);
             color: var(--blanco);
             border: none;
             padding: 1rem 2rem;
@@ -1308,41 +1453,6 @@
         .btn-discord:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 30px rgba(88, 101, 242, 0.6);
-        }
-
-        /* Estado de sesión */
-        .user-status {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: var(--blanco);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--verde-claro);
-        }
-
-        .user-name {
-            font-weight: 600;
-        }
-
-        .btn-logout {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--blanco);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-logout:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
         }
 
         /* Responsive */
@@ -1393,6 +1503,10 @@
                 height: 40px;
                 font-size: 1.2rem;
             }
+
+            .discord-actions {
+                flex-direction: column;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -1429,8 +1543,11 @@
                 <!-- Estado de usuario (se actualiza dinámicamente) -->
                 <button class="btn-primary" id="loginButton">Ingresar</button>
                 <div class="dropdown-content login-options" id="loginOptions">
-                    <a href="#" class="btn-login-option" onclick="loginWithDiscord('user')">
-                        <i class="fab fa-discord"></i> Iniciar Sesión con Discord
+                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('user')">
+                        <i class="fas fa-user"></i> Como Usuario
+                    </a>
+                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('funcionario')">
+                        <i class="fas fa-user-shield"></i> Como Funcionario
                     </a>
                 </div>
             </div>
@@ -1582,19 +1699,54 @@
         </div>
     </div>
 
-    <!-- Modal de Login -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeLoginModal">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2>Iniciar Sesión</h2>
-            <p style="text-align: center; margin-bottom: 2rem; color: rgba(255,255,255,0.8);">
-                Para realizar trámites y ver todas las imágenes, debes iniciar sesión con Discord.
+    <!-- Modal de Autorización Discord -->
+    <div class="discord-auth-modal" id="discordAuthModal">
+        <div class="discord-auth-content">
+            <div class="discord-header">
+                <div class="discord-logo">
+                    <i class="fab fa-discord"></i>
+                </div>
+                <h2 class="discord-title">Comisaria Virtual CHRPCM</h2>
+                <p class="discord-subtitle">quiere acceder a tu cuenta de Discord</p>
+            </div>
+
+            <div class="discord-user-info">
+                <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="discord-user-avatar" id="discordUserAvatar">
+                <div class="discord-user-details">
+                    <div class="discord-username" id="discordUsername">danilocuevas912</div>
+                    <div class="discord-not-you" onclick="switchUser()">¿No eres tú?</div>
+                </div>
+            </div>
+
+            <div class="discord-permissions">
+                <p>Esto le permitirá al desarrollador de Comisaria Virtual CHRPCM hacer lo siguiente:</p>
+                <div class="discord-permission-item">
+                    <div class="discord-permission-checkbox"></div>
+                    <span>Acceder a tu nombre de usuario, avatar y cartel</span>
+                </div>
+                <div class="discord-permission-item">
+                    <div class="discord-permission-checkbox"></div>
+                    <span>Saber en qué servidores estás</span>
+                </div>
+                <div class="discord-permission-item">
+                    <div class="discord-permission-checkbox checked"></div>
+                    <span>Pintar un pequeño árbol alegre</span>
+                </div>
+            </div>
+
+            <p class="discord-redirect">
+                Una vez que nos des tu autorización, te redirigiremos fuera de Discord a la siguiente página:<br>
+                https://comisaria-virtual-chrpcm.onrender.com
             </p>
-            <button class="btn-discord" onclick="loginWithDiscord('user')">
-                <i class="fab fa-discord"></i> Iniciar Sesión con Discord
-            </button>
+
+            <div class="discord-actions">
+                <button class="discord-btn discord-btn-cancel" onclick="closeDiscordAuth()">Cancelar</button>
+                <button class="discord-btn discord-btn-authorize" onclick="authorizeDiscord()">Autorizar</button>
+            </div>
+
+            <div class="discord-scroll-hint">
+                <i class="fas fa-chevron-down"></i> Sigue desplazándote...
+            </div>
         </div>
     </div>
 
@@ -1631,6 +1783,7 @@
         // Estado de sesión
         let userLoggedIn = false;
         let currentUser = null;
+        let currentRole = null;
 
         // Pantalla de carga épica
         window.addEventListener('load', function() {
@@ -1681,7 +1834,10 @@
                 loginButton.innerHTML = `
                     <div class="user-status">
                         <img src="${currentUser.avatar}" alt="Avatar" class="user-avatar">
-                        <span class="user-name">${currentUser.username}</span>
+                        <div>
+                            <div class="user-name">${currentUser.username}</div>
+                            <div class="user-badge">${currentUser.role === 'funcionario' ? 'Funcionario' : 'Usuario'}</div>
+                        </div>
                     </div>
                 `;
                 
@@ -1697,16 +1853,19 @@
                 // Actualizar botones de trámites
                 document.querySelectorAll('.card button').forEach(button => {
                     button.textContent = 'Iniciar Trámite';
+                    const cardTitle = button.closest('.card').querySelector('h3').textContent;
                     button.onclick = function() {
-                        const cardTitle = this.closest('.card').querySelector('h3').textContent;
                         startTramite(cardTitle);
                     };
                 });
             } else {
                 loginButton.textContent = 'Ingresar';
                 loginOptions.innerHTML = `
-                    <a href="#" class="btn-login-option" onclick="showLoginModal()">
-                        <i class="fab fa-discord"></i> Iniciar Sesión con Discord
+                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('user')">
+                        <i class="fas fa-user"></i> Como Usuario
+                    </a>
+                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('funcionario')">
+                        <i class="fas fa-user-shield"></i> Como Funcionario
                     </a>
                 `;
                 
@@ -1721,48 +1880,49 @@
             }
         }
 
-        // Mostrar modal de login
-        function showLoginModal() {
-            document.getElementById('loginModal').classList.add('active');
+        // Mostrar modal de autorización Discord
+        function showDiscordAuth(role) {
+            currentRole = role;
+            document.getElementById('discordAuthModal').classList.add('active');
         }
 
-        // Cerrar modal de login
-        document.getElementById('closeLoginModal').addEventListener('click', function() {
-            document.getElementById('loginModal').classList.remove('active');
-        });
+        // Cerrar modal de autorización Discord
+        function closeDiscordAuth() {
+            document.getElementById('discordAuthModal').classList.remove('active');
+        }
 
-        // Verificar login antes de proceder
-        function checkLoginAndProceed(tramiteName) {
-            if (!userLoggedIn) {
-                showLoginModal();
+        // Cambiar usuario (simulado)
+        function switchUser() {
+            const username = document.getElementById('discordUsername');
+            const avatar = document.getElementById('discordUserAvatar');
+            
+            // Simular cambio de usuario
+            if (username.textContent === 'danilocuevas912') {
+                username.textContent = 'usuario_ejemplo#1234';
+                avatar.src = 'https://cdn.discordapp.com/embed/avatars/1.png';
             } else {
-                startTramite(tramiteName);
+                username.textContent = 'danilocuevas912';
+                avatar.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
             }
         }
 
-        // Iniciar trámite (simulado)
-        function startTramite(tramiteName) {
-            alert(`Iniciando trámite: ${tramiteName}\n\n(Esta sería la página del formulario real)`);
-        }
-
-        // Iniciar sesión con Discord (simulado)
-        function loginWithDiscord(role) {
-            // Simular autenticación con Discord
-            const loginModal = document.getElementById('loginModal');
+        // Autorizar con Discord
+        function authorizeDiscord() {
+            const discordModal = document.getElementById('discordAuthModal');
+            const authorizeBtn = document.querySelector('.discord-btn-authorize');
             
             // Mostrar animación de carga
-            const discordButton = document.querySelector('.btn-discord');
-            const originalText = discordButton.innerHTML;
-            discordButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Conectando con Discord...';
-            discordButton.disabled = true;
+            const originalText = authorizeBtn.textContent;
+            authorizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Autorizando...';
+            authorizeBtn.disabled = true;
             
-            // Simular proceso de autenticación
+            // Simular proceso de autorización
             setTimeout(() => {
                 userLoggedIn = true;
                 currentUser = {
-                    username: 'UsuarioEjemplo#1234',
-                    avatar: 'https://cdn.discordapp.com/embed/avatars/0.png',
-                    role: role
+                    username: document.getElementById('discordUsername').textContent,
+                    avatar: document.getElementById('discordUserAvatar').src,
+                    role: currentRole
                 };
                 
                 // Guardar en localStorage
@@ -1772,21 +1932,36 @@
                 updateUserInterface();
                 
                 // Cerrar modal
-                loginModal.classList.remove('active');
+                discordModal.classList.remove('active');
                 
                 // Restaurar botón
-                discordButton.innerHTML = originalText;
-                discordButton.disabled = false;
+                authorizeBtn.innerHTML = originalText;
+                authorizeBtn.disabled = false;
                 
                 // Mostrar mensaje de éxito
-                showNotification('¡Sesión iniciada correctamente! Ahora puedes realizar trámites y ver la galería completa.');
+                showNotification(`¡Sesión iniciada correctamente como ${currentRole === 'funcionario' ? 'Funcionario' : 'Usuario'}!`);
             }, 2000);
+        }
+
+        // Verificar login antes de proceder
+        function checkLoginAndProceed(tramiteName) {
+            if (!userLoggedIn) {
+                showDiscordAuth('user');
+            } else {
+                startTramite(tramiteName);
+            }
+        }
+
+        // Iniciar trámite (simulado)
+        function startTramite(tramiteName) {
+            alert(`Iniciando trámite: ${tramiteName}\n\nRol: ${currentUser.role}\n\n(Esta sería la página del formulario real)`);
         }
 
         // Cerrar sesión
         function logout() {
             userLoggedIn = false;
             currentUser = null;
+            currentRole = null;
             localStorage.removeItem('chilenosrp_user');
             updateUserInterface();
             showNotification('Sesión cerrada correctamente.');
@@ -1795,11 +1970,10 @@
         // Ver galería completa (solo para usuarios logueados)
         function viewGallery() {
             if (userLoggedIn) {
-                // Aquí podrías mostrar una galería extendida o más imágenes
                 showNotification('¡Disfruta de nuestra galería completa!');
-                // Podrías abrir el modal de galería con más imágenes aquí
+                // Aquí podrías mostrar una galería extendida o más imágenes
             } else {
-                showLoginModal();
+                showDiscordAuth('user');
             }
         }
 
@@ -1927,9 +2101,14 @@
 
         // Cerrar modal con tecla Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && galleryModal.classList.contains('active')) {
-                galleryModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+            if (e.key === 'Escape') {
+                if (galleryModal.classList.contains('active')) {
+                    galleryModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+                if (document.getElementById('discordAuthModal').classList.contains('active')) {
+                    closeDiscordAuth();
+                }
             }
         });
 
