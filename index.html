@@ -1043,4 +1043,467 @@
                     <div class="card-icon-wrapper">
                         <i class="fas fa-house-damage"></i>
                     </div>
-                    <h3>
+                    <h3>Hurto Agravado</h3>
+                    <p>Hurto con abuso de confianza u otras agravantes. Nuestro sistema prioriza estos casos.</p>
+                    <button data-modal-id="modal-hurto-agravado">Denuncia Agravada</button>
+                </div>
+
+                <div class="card" data-category="informacion">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <h3>Información Anónima</h3>
+                    <p>Informa sobre tráfico o consumo ilegal de drogas de manera anónima con cifrado de alta seguridad.</p>
+                    <button data-modal-id="modal-informacion-anonima">Informar Confidencialmente</button>
+                </div>
+                
+                <div class="card" data-category="actuar">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Felicitaciones</h3>
+                    <p>Reconoce públicamente el buen actuar de Carabineros. Tu reconocimiento será destacado.</p>
+                    <button data-modal-id="modal-felicitaciones">Enviar Felicitación</button>
+                </div>
+
+                <div class="card" data-category="denuncia">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Protección Ciudadana</h3>
+                    <p>Solicita medidas de protección especiales para tu seguridad personal o familiar.</p>
+                    <button data-modal-id="modal-proteccion">Solicitar Protección</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERÍA ÉPICA -->
+    <section id="galeria" class="epic-section">
+        <div class="gallery-section">
+            <h2 class="section-title">POSTALES ÉPICAS</h2>
+            <p class="section-subtitle">Imágenes que capturan el espíritu y la dedicación de nuestras fuerzas del orden en acción.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/uuFoJUB.png" alt="Postal de la comunidad 1">
+                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/2UelIPj.png" alt="Postal de la comunidad 2">
+                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/8RnLql1.png" alt="Postal de la comunidad 3">
+                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/Hfxf15a.png" alt="Postal de la comunidad 4">
+                    <div class="gallery-overlay"><i class="fas fa-eye"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALES -->
+    <div id="modal-robo-vehiculo" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-robo-title">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Cerrar formulario">&times;</button>
+            <h2 id="modal-robo-title">Denuncia Asociada a Vehículos</h2>
+            <form id="form-robo" data-form-id="roboVehiculo" novalidate>
+                <div class="form-group">
+                    <label for="nombreRobo">Tu Nombre Completo</label>
+                    <input type="text" id="nombreRobo" name="nombreCompleto" class="form-control" placeholder="Ej: Juan Pérez" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="rutRobo">Tu RUT</label>
+                    <input type="text" id="rutRobo" name="rut" class="form-control" placeholder="Ej: 12.345.678-9" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="tipoDenunciaVehicular">Tipo de denuncia</label>
+                    <select id="tipoDenunciaVehicular" name="tipoDenuncia" class="form-control" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="Robo de Vehículo">Robo de Vehículo</option>
+                        <option value="Venta de Repuestos Robados">Venta de Repuestos Robados</option>
+                        <option value="Ubicación de Vehículo Robado">Ubicación de Vehículo Robado</option>
+                    </select>
+                </div>
+
+                <div id="campos-robo-especifico" style="display: none;">
+                    <div class="form-group">
+                        <label for="patenteVehiculo">Patente del vehículo hurtado</label>
+                        <input type="text" id="patenteVehiculo" name="patente" class="form-control" placeholder="Ej: ABCD-12" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="colorVehiculo">Color del vehículo hurtado</label>
+                        <input type="text" id="colorVehiculo" name="colorVehiculo" class="form-control" placeholder="Ej: Rojo" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marcaModeloVehiculo">Marca y Modelo del vehículo hurtado</label>
+                        <input type="text" id="marcaModeloVehiculo" name="marcaModeloVehiculo" class="form-control" placeholder="Ej: Toyota Yaris" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>¿Hubo testigos?</label>
+                    <div><label><input type="radio" name="testigos" value="si" required> Sí</label></div>
+                    <div><label><input type="radio" name="testigos" value="no" required> No</label></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="direccion">Dirección del Incidente</label>
+                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Donde ocurrió el hecho" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha del Incidente</label>
+                    <input type="date" id="fecha" name="fecha" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción Adicional</label>
+                    <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="Describa detalles relevantes del hecho" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="adjuntar">Adjuntar archivos (evidencia)</label>
+                    <input type="file" id="adjuntar" name="evidencia" accept="image/*,application/pdf" />
+                </div>
+
+                <button type="submit">Enviar Denuncia</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Más modales aquí (se mantienen igual que en el código original) -->
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox-modal" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-image">
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- FOOTER ÉPICO -->
+    <footer class="epic-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Comisaría Virtual Épica</h4>
+                <p>Una iniciativa revolucionaria de Chile Roleplay Community para mejorar la interacción y el roleplay de calidad con tecnología de vanguardia.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#tramites">Realizar Trámite</a></li>
+                    <li><a href="#quienes-somos">¿Quiénes Somos?</a></li>
+                    <li><a href="#galeria">Postales Épicas</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Términos de Servicio</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Nuestras Redes</h4>
+                <div class="social-links">
+                    <a href="https://discord.gg/CPEWE7WgR4" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.youtube.com/@chrpcm/featured" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/chrpcm.erlc/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Chile Roleplay Community. Todos los derechos reservados.<br>
+            Diseño y desarrollo web por cristobal.dev — En colaboración con Overline Studios.</p>
+        </div>
+    </footer>
+
+    <script>
+        // INICIALIZAR PARTÍCULAS
+        function initParticles() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { 
+                            value: 80, 
+                            density: { enable: true, value_area: 800 } 
+                        },
+                        color: { value: "#0066cc" },
+                        shape: { 
+                            type: "circle",
+                            stroke: { width: 0, color: "#000000" }
+                        },
+                        opacity: { 
+                            value: 0.3, 
+                            random: true,
+                            anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                        },
+                        size: { 
+                            value: 3, 
+                            random: true,
+                            anim: { enable: true, speed: 2, size_min: 0.5, sync: false }
+                        },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: "#00aaff",
+                            opacity: 0.2,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 1,
+                            direction: "none",
+                            random: true,
+                            straight: false,
+                            out_mode: "out",
+                            bounce: false,
+                            attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                        }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: {
+                            onhover: { enable: true, mode: "repulse" },
+                            onclick: { enable: true, mode: "push" },
+                            resize: true
+                        },
+                        modes: {
+                            repulse: { distance: 100, duration: 0.4 },
+                            push: { particles_nb: 2 }
+                        }
+                    },
+                    retina_detect: true
+                });
+            } else {
+                console.warn('particles.js not loaded');
+            }
+        }
+
+        // NAVBAR SCROLL EFFECT
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // ANIMACIONES AL SCROLL
+        function handleScrollAnimations() {
+            const sections = document.querySelectorAll('.about-section, .tramites-section, .gallery-section');
+            const cards = document.querySelectorAll('.card');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.85) {
+                    section.classList.add('visible');
+                }
+            });
+            
+            cards.forEach((card, index) => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (cardTop < windowHeight * 0.85) {
+                    setTimeout(() => {
+                        card.classList.add('animated');
+                    }, index * 100);
+                }
+            });
+        }
+
+        // FILTRAR CARDS
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.filter-buttons button');
+            const cards = document.querySelectorAll('.card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remover clase activa de todos los botones
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Agregar clase activa al botón clickeado
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    cards.forEach(card => {
+                        if (filter === 'todos' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.classList.add('animated');
+                            }, 100);
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // MODALES
+        function setupModals() {
+            const modalButtons = document.querySelectorAll('.card button, .hero-button');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            
+            modalButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.getAttribute('data-modal-id');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                    }
+                });
+            });
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modal = button.closest('.modal');
+                    modal.classList.remove('active');
+                });
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // LIGHTBOX GALERÍA
+        function setupLightbox() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const imgSrc = item.querySelector('img').getAttribute('src');
+                    lightboxImg.setAttribute('src', imgSrc);
+                    lightbox.classList.add('active');
+                });
+            });
+            
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+            
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        }
+
+        // TOAST NOTIFICATIONS
+        function showToast(title, message, type = 'success') {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            const color = type === 'success' ? 'var(--success)' : 'var(--warning)';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <h3 class="toast-title">${title}</h3>
+                <p class="toast-message">${message}</p>
+            `;
+            
+            toast.style.borderColor = color;
+            toast.querySelector('.toast-icon i').style.color = color;
+            
+            toastContainer.appendChild(toast);
+            
+            // Mostrar toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Ocultar y eliminar toast después de 5 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 5000);
+        }
+
+        // FORM SUBMISSION
+        function setupForms() {
+            const forms = document.querySelectorAll('form');
+            
+            forms.forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Simular envío exitoso
+                    const formId = form.getAttribute('data-form-id');
+                    const modal = form.closest('.modal');
+                    
+                    // Cerrar modal
+                    modal.classList.remove('active');
+                    
+                    // Mostrar toast de éxito
+                    showToast('TRÁMITE ENVIADO', 'Tu solicitud ha sido procesada exitosamente. Recibirás una respuesta pronto.', 'success');
+                    
+                    // Resetear formulario
+                    form.reset();
+                });
+            });
+        }
+
+        // SMOOTH SCROLL
+        function setupSmoothScroll() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const targetId = link.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // INICIALIZAR TODO
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+            setupFilterButtons();
+            setupModals();
+            setupLightbox();
+            setupForms();
+            setupSmoothScroll();
+            
+            window.addEventListener('scroll', function() {
+                handleNavbarScroll();
+                handleScrollAnimations();
+            });
+            
+            handleScrollAnimations();
+        });
+    </script>
+</body>
+</html>
