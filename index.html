@@ -1265,6 +1265,86 @@
             box-shadow: 0 0 20px rgba(0, 168, 89, 0.3);
         }
 
+        /* Botón Discord */
+        .btn-discord {
+            background: #5865F2;
+            color: var(--blanco);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-discord::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-discord:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-discord:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.6);
+        }
+
+        /* Estado de sesión */
+        .user-status {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--blanco);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--verde-claro);
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--blanco);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -1345,14 +1425,12 @@
             <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP">
         </div>
         <div class="header-right">
-            <div class="dropdown">
-                <button class="btn-primary">Ingresar</button>
-                <div class="dropdown-content login-options">
-                    <a href="#" class="btn-login-option" onclick="loginUsuario(event)">
-                        <i class="fas fa-user"></i> Como Usuario
-                    </a>
-                    <a href="#" class="btn-login-option" onclick="loginFuncionario(event)">
-                        <i class="fas fa-user-shield"></i> Como Funcionario
+            <div class="dropdown" id="userDropdown">
+                <!-- Estado de usuario (se actualiza dinámicamente) -->
+                <button class="btn-primary" id="loginButton">Ingresar</button>
+                <div class="dropdown-content login-options" id="loginOptions">
+                    <a href="#" class="btn-login-option" onclick="loginWithDiscord('user')">
+                        <i class="fab fa-discord"></i> Iniciar Sesión con Discord
                     </a>
                 </div>
             </div>
@@ -1404,7 +1482,7 @@
             </div>
             <h3>Robo de Vehículo</h3>
             <p>Denuncia el robo de tu automóvil u otro vehículo motorizado.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Robo de Vehículo')">Debes iniciar sesión para realizar este trámite</button>
         </div>
 
         <div class="card" data-category="informacion">
@@ -1413,7 +1491,7 @@
             </div>
             <h3>Crimen Organizado</h3>
             <p>Entrega información anónima sobre tenencia ilegal de arma, robos, homicidios y secuestros.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Crimen Organizado')">Debes iniciar sesión para realizar este trámite</button>
         </div>
 
         <div class="card" data-category="actuar">
@@ -1422,7 +1500,7 @@
             </div>
             <h3>Queja contra Funcionarios</h3>
             <p>Envía una queja formal sobre el actuar de algún funcionario policial.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Queja contra Funcionarios')">Debes iniciar sesión para realizar este trámite</button>
         </div>
 
         <div class="card" data-category="denuncia">
@@ -1431,7 +1509,7 @@
             </div>
             <h3>Hurto Simple</h3>
             <p>Apropiación de cosa mueble ajena sin violencia o intimidación.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Hurto Simple')">Debes iniciar sesión para realizar este trámite</button>
         </div>
 
         <div class="card" data-category="denuncia">
@@ -1440,7 +1518,7 @@
             </div>
             <h3>Hurto Agravado</h3>
             <p>Hurto con abuso de confianza u otras agravantes.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Hurto Agravado')">Debes iniciar sesión para realizar este trámite</button>
         </div>
 
         <div class="card" data-category="informacion">
@@ -1449,7 +1527,7 @@
             </div>
             <h3>Información Anónima</h3>
             <p>Informa sobre tráfico o consumo ilegal de drogas de manera anónima.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Información Anónima')">Debes iniciar sesión para realizar este trámite</button>
         </div>
 
         <div class="card" data-category="actuar">
@@ -1458,7 +1536,7 @@
             </div>
             <h3>Felicitaciones</h3>
             <p>Reconoce públicamente el buen actuar de Carabineros.</p>
-            <button onclick="alert('Debes iniciar sesión para realizar este trámite')">Iniciar trámite</button>
+            <button onclick="checkLoginAndProceed('Felicitaciones')">Debes iniciar sesión para realizar este trámite</button>
         </div>
     </div>
 
@@ -1504,6 +1582,22 @@
         </div>
     </div>
 
+    <!-- Modal de Login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeLoginModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2>Iniciar Sesión</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: rgba(255,255,255,0.8);">
+                Para realizar trámites y ver todas las imágenes, debes iniciar sesión con Discord.
+            </p>
+            <button class="btn-discord" onclick="loginWithDiscord('user')">
+                <i class="fab fa-discord"></i> Iniciar Sesión con Discord
+            </button>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
@@ -1534,6 +1628,10 @@
     </footer>
 
     <script>
+        // Estado de sesión
+        let userLoggedIn = false;
+        let currentUser = null;
+
         // Pantalla de carga épica
         window.addEventListener('load', function() {
             const loadingScreen = document.getElementById('loadingScreen');
@@ -1559,7 +1657,181 @@
                 }
                 loadingBar.style.width = progress + '%';
             }, 200);
+
+            // Verificar si hay una sesión guardada
+            checkSavedSession();
         });
+
+        // Verificar sesión guardada
+        function checkSavedSession() {
+            const savedUser = localStorage.getItem('chilenosrp_user');
+            if (savedUser) {
+                userLoggedIn = true;
+                currentUser = JSON.parse(savedUser);
+                updateUserInterface();
+            }
+        }
+
+        // Actualizar interfaz según estado de sesión
+        function updateUserInterface() {
+            const loginButton = document.getElementById('loginButton');
+            const loginOptions = document.getElementById('loginOptions');
+            
+            if (userLoggedIn && currentUser) {
+                loginButton.innerHTML = `
+                    <div class="user-status">
+                        <img src="${currentUser.avatar}" alt="Avatar" class="user-avatar">
+                        <span class="user-name">${currentUser.username}</span>
+                    </div>
+                `;
+                
+                loginOptions.innerHTML = `
+                    <a href="#" class="btn-login-option" onclick="viewGallery()">
+                        <i class="fas fa-images"></i> Ver Galería Completa
+                    </a>
+                    <a href="#" class="btn-login-option" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                `;
+                
+                // Actualizar botones de trámites
+                document.querySelectorAll('.card button').forEach(button => {
+                    button.textContent = 'Iniciar Trámite';
+                    button.onclick = function() {
+                        const cardTitle = this.closest('.card').querySelector('h3').textContent;
+                        startTramite(cardTitle);
+                    };
+                });
+            } else {
+                loginButton.textContent = 'Ingresar';
+                loginOptions.innerHTML = `
+                    <a href="#" class="btn-login-option" onclick="showLoginModal()">
+                        <i class="fab fa-discord"></i> Iniciar Sesión con Discord
+                    </a>
+                `;
+                
+                // Restaurar botones de trámites
+                document.querySelectorAll('.card button').forEach(button => {
+                    button.textContent = 'Debes iniciar sesión para realizar este trámite';
+                    const cardTitle = button.closest('.card').querySelector('h3').textContent;
+                    button.onclick = function() {
+                        checkLoginAndProceed(cardTitle);
+                    };
+                });
+            }
+        }
+
+        // Mostrar modal de login
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        // Cerrar modal de login
+        document.getElementById('closeLoginModal').addEventListener('click', function() {
+            document.getElementById('loginModal').classList.remove('active');
+        });
+
+        // Verificar login antes de proceder
+        function checkLoginAndProceed(tramiteName) {
+            if (!userLoggedIn) {
+                showLoginModal();
+            } else {
+                startTramite(tramiteName);
+            }
+        }
+
+        // Iniciar trámite (simulado)
+        function startTramite(tramiteName) {
+            alert(`Iniciando trámite: ${tramiteName}\n\n(Esta sería la página del formulario real)`);
+        }
+
+        // Iniciar sesión con Discord (simulado)
+        function loginWithDiscord(role) {
+            // Simular autenticación con Discord
+            const loginModal = document.getElementById('loginModal');
+            
+            // Mostrar animación de carga
+            const discordButton = document.querySelector('.btn-discord');
+            const originalText = discordButton.innerHTML;
+            discordButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Conectando con Discord...';
+            discordButton.disabled = true;
+            
+            // Simular proceso de autenticación
+            setTimeout(() => {
+                userLoggedIn = true;
+                currentUser = {
+                    username: 'UsuarioEjemplo#1234',
+                    avatar: 'https://cdn.discordapp.com/embed/avatars/0.png',
+                    role: role
+                };
+                
+                // Guardar en localStorage
+                localStorage.setItem('chilenosrp_user', JSON.stringify(currentUser));
+                
+                // Actualizar interfaz
+                updateUserInterface();
+                
+                // Cerrar modal
+                loginModal.classList.remove('active');
+                
+                // Restaurar botón
+                discordButton.innerHTML = originalText;
+                discordButton.disabled = false;
+                
+                // Mostrar mensaje de éxito
+                showNotification('¡Sesión iniciada correctamente! Ahora puedes realizar trámites y ver la galería completa.');
+            }, 2000);
+        }
+
+        // Cerrar sesión
+        function logout() {
+            userLoggedIn = false;
+            currentUser = null;
+            localStorage.removeItem('chilenosrp_user');
+            updateUserInterface();
+            showNotification('Sesión cerrada correctamente.');
+        }
+
+        // Ver galería completa (solo para usuarios logueados)
+        function viewGallery() {
+            if (userLoggedIn) {
+                // Aquí podrías mostrar una galería extendida o más imágenes
+                showNotification('¡Disfruta de nuestra galería completa!');
+                // Podrías abrir el modal de galería con más imágenes aquí
+            } else {
+                showLoginModal();
+            }
+        }
+
+        // Mostrar notificación
+        function showNotification(message) {
+            // Crear elemento de notificación
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, var(--verde-claro), var(--verde-carabinero));
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                z-index: 3000;
+                animation: slideInRight 0.5s ease-out;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remover después de 5 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease-in forwards';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 5000);
+        }
 
         // Crear partículas flotantes
         function createParticles() {
@@ -1672,17 +1944,6 @@
             }
         });
 
-        // Login functions
-        function loginUsuario(e) {
-            e.preventDefault();
-            window.location.href = 'https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fuser%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704';
-        }
-
-        function loginFuncionario(e) {
-            e.preventDefault();
-            window.location.href = 'https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704';
-        }
-
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1743,6 +2004,22 @@
 
         // Inicializar partículas
         createParticles();
+
+        // Añadir animación para notificaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
