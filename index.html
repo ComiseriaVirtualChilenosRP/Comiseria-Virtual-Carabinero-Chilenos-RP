@@ -1137,198 +1137,6 @@
             transform: translateY(0);
         }
 
-        /* Modal de Autorización Discord */
-        .discord-auth-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .discord-auth-modal.active {
-            display: flex;
-        }
-
-        .discord-auth-content {
-            background: #36393f;
-            border-radius: 8px;
-            padding: 2rem;
-            max-width: 480px;
-            width: 90%;
-            animation: modalSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            color: #ffffff;
-            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        .discord-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .discord-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto 1rem;
-            background: var(--discord-blurple);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-        }
-
-        .discord-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .discord-subtitle {
-            color: #b9bbbe;
-            font-size: 1rem;
-        }
-
-        .discord-user-info {
-            background: #2f3136;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .discord-user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        .discord-user-details {
-            flex: 1;
-        }
-
-        .discord-username {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .discord-not-you {
-            color: #00aff4;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .discord-permissions {
-            background: #2f3136;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .discord-permission-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .discord-permission-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .discord-permission-checkbox {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #72767d;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .discord-permission-checkbox.checked {
-            background: var(--discord-blurple);
-            border-color: var(--discord-blurple);
-        }
-
-        .discord-permission-checkbox.checked::after {
-            content: '✓';
-            color: white;
-            font-size: 12px;
-        }
-
-        .discord-redirect {
-            color: #b9bbbe;
-            font-size: 0.8rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .discord-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .discord-btn {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 3px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .discord-btn-cancel {
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid #72767d;
-        }
-
-        .discord-btn-cancel:hover {
-            background: #4f545c;
-        }
-
-        .discord-btn-authorize {
-            background: var(--discord-blurple);
-            color: #ffffff;
-        }
-
-        .discord-btn-authorize:hover {
-            background: #4752c4;
-        }
-
-        .discord-scroll-hint {
-            text-align: center;
-            color: #72767d;
-            font-size: 0.8rem;
-            margin-top: 1rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-5px);
-            }
-            60% {
-                transform: translateY(-3px);
-            }
-        }
-
         /* Footer */
         .site-footer {
             background: var(--verde-oscuro);
@@ -1503,10 +1311,6 @@
                 height: 40px;
                 font-size: 1.2rem;
             }
-
-            .discord-actions {
-                flex-direction: column;
-            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -1543,10 +1347,10 @@
                 <!-- Estado de usuario (se actualiza dinámicamente) -->
                 <button class="btn-primary" id="loginButton">Ingresar</button>
                 <div class="dropdown-content login-options" id="loginOptions">
-                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('user')">
+                    <a href="https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fuser%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704" class="btn-login-option">
                         <i class="fas fa-user"></i> Como Usuario
                     </a>
-                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('funcionario')">
+                    <a href="https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds%20guilds.members.read&client_id=1360106072165318704" class="btn-login-option">
                         <i class="fas fa-user-shield"></i> Como Funcionario
                     </a>
                 </div>
@@ -1699,57 +1503,6 @@
         </div>
     </div>
 
-    <!-- Modal de Autorización Discord -->
-    <div class="discord-auth-modal" id="discordAuthModal">
-        <div class="discord-auth-content">
-            <div class="discord-header">
-                <div class="discord-logo">
-                    <i class="fab fa-discord"></i>
-                </div>
-                <h2 class="discord-title">Comisaria Virtual CHRPCM</h2>
-                <p class="discord-subtitle">quiere acceder a tu cuenta de Discord</p>
-            </div>
-
-            <div class="discord-user-info">
-                <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="discord-user-avatar" id="discordUserAvatar">
-                <div class="discord-user-details">
-                    <div class="discord-username" id="discordUsername">danilocuevas912</div>
-                    <div class="discord-not-you" onclick="switchUser()">¿No eres tú?</div>
-                </div>
-            </div>
-
-            <div class="discord-permissions">
-                <p>Esto le permitirá al desarrollador de Comisaria Virtual CHRPCM hacer lo siguiente:</p>
-                <div class="discord-permission-item">
-                    <div class="discord-permission-checkbox"></div>
-                    <span>Acceder a tu nombre de usuario, avatar y cartel</span>
-                </div>
-                <div class="discord-permission-item">
-                    <div class="discord-permission-checkbox"></div>
-                    <span>Saber en qué servidores estás</span>
-                </div>
-                <div class="discord-permission-item">
-                    <div class="discord-permission-checkbox checked"></div>
-                    <span>Pintar un pequeño árbol alegre</span>
-                </div>
-            </div>
-
-            <p class="discord-redirect">
-                Una vez que nos des tu autorización, te redirigiremos fuera de Discord a la siguiente página:<br>
-                https://comisaria-virtual-chrpcm.onrender.com
-            </p>
-
-            <div class="discord-actions">
-                <button class="discord-btn discord-btn-cancel" onclick="closeDiscordAuth()">Cancelar</button>
-                <button class="discord-btn discord-btn-authorize" onclick="authorizeDiscord()">Autorizar</button>
-            </div>
-
-            <div class="discord-scroll-hint">
-                <i class="fas fa-chevron-down"></i> Sigue desplazándote...
-            </div>
-        </div>
-    </div>
-
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
@@ -1783,7 +1536,6 @@
         // Estado de sesión
         let userLoggedIn = false;
         let currentUser = null;
-        let currentRole = null;
 
         // Pantalla de carga épica
         window.addEventListener('load', function() {
@@ -1861,10 +1613,10 @@
             } else {
                 loginButton.textContent = 'Ingresar';
                 loginOptions.innerHTML = `
-                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('user')">
+                    <a href="https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fuser%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704" class="btn-login-option">
                         <i class="fas fa-user"></i> Como Usuario
                     </a>
-                    <a href="#" class="btn-login-option" onclick="showDiscordAuth('funcionario')">
+                    <a href="https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds%20guilds.members.read&client_id=1360106072165318704" class="btn-login-option">
                         <i class="fas fa-user-shield"></i> Como Funcionario
                     </a>
                 `;
@@ -1880,73 +1632,11 @@
             }
         }
 
-        // Mostrar modal de autorización Discord
-        function showDiscordAuth(role) {
-            currentRole = role;
-            document.getElementById('discordAuthModal').classList.add('active');
-        }
-
-        // Cerrar modal de autorización Discord
-        function closeDiscordAuth() {
-            document.getElementById('discordAuthModal').classList.remove('active');
-        }
-
-        // Cambiar usuario (simulado)
-        function switchUser() {
-            const username = document.getElementById('discordUsername');
-            const avatar = document.getElementById('discordUserAvatar');
-            
-            // Simular cambio de usuario
-            if (username.textContent === 'danilocuevas912') {
-                username.textContent = 'usuario_ejemplo#1234';
-                avatar.src = 'https://cdn.discordapp.com/embed/avatars/1.png';
-            } else {
-                username.textContent = 'danilocuevas912';
-                avatar.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
-            }
-        }
-
-        // Autorizar con Discord
-        function authorizeDiscord() {
-            const discordModal = document.getElementById('discordAuthModal');
-            const authorizeBtn = document.querySelector('.discord-btn-authorize');
-            
-            // Mostrar animación de carga
-            const originalText = authorizeBtn.textContent;
-            authorizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Autorizando...';
-            authorizeBtn.disabled = true;
-            
-            // Simular proceso de autorización
-            setTimeout(() => {
-                userLoggedIn = true;
-                currentUser = {
-                    username: document.getElementById('discordUsername').textContent,
-                    avatar: document.getElementById('discordUserAvatar').src,
-                    role: currentRole
-                };
-                
-                // Guardar en localStorage
-                localStorage.setItem('chilenosrp_user', JSON.stringify(currentUser));
-                
-                // Actualizar interfaz
-                updateUserInterface();
-                
-                // Cerrar modal
-                discordModal.classList.remove('active');
-                
-                // Restaurar botón
-                authorizeBtn.innerHTML = originalText;
-                authorizeBtn.disabled = false;
-                
-                // Mostrar mensaje de éxito
-                showNotification(`¡Sesión iniciada correctamente como ${currentRole === 'funcionario' ? 'Funcionario' : 'Usuario'}!`);
-            }, 2000);
-        }
-
         // Verificar login antes de proceder
         function checkLoginAndProceed(tramiteName) {
             if (!userLoggedIn) {
-                showDiscordAuth('user');
+                // Redirigir a Discord OAuth para usuarios
+                window.location.href = "https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fuser%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704";
             } else {
                 startTramite(tramiteName);
             }
@@ -1961,7 +1651,6 @@
         function logout() {
             userLoggedIn = false;
             currentUser = null;
-            currentRole = null;
             localStorage.removeItem('chilenosrp_user');
             updateUserInterface();
             showNotification('Sesión cerrada correctamente.');
@@ -1973,7 +1662,8 @@
                 showNotification('¡Disfruta de nuestra galería completa!');
                 // Aquí podrías mostrar una galería extendida o más imágenes
             } else {
-                showDiscordAuth('user');
+                // Redirigir a Discord OAuth para usuarios
+                window.location.href = "https://discord.com/oauth2/authorize?response_type=code&redirect_uri=https%3A%2F%2Fcomisaria-virtual-chrpcm.onrender.com%2Fauth%2Fuser%2Fcallback&scope=identify%20guilds&client_id=1360106072165318704";
             }
         }
 
@@ -2105,9 +1795,6 @@
                 if (galleryModal.classList.contains('active')) {
                     galleryModal.classList.remove('active');
                     document.body.style.overflow = 'auto';
-                }
-                if (document.getElementById('discordAuthModal').classList.contains('active')) {
-                    closeDiscordAuth();
                 }
             }
         });
