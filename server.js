@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const DISCORD_CONFIG = {
     CLIENT_ID: '1425170360189456547',
     CLIENT_SECRET: process.env.CLIENT_SECRET || '44uXihKa4Z4kXEnjvMlAJu7utlBSM_pZ',
-    REDIRECT_URI: process.env.REDIRECT_URI || 'https://comiseria-virtual-carabinero-chilenos-rp.onrender.com/auth/callback',
+    REDIRECT_URI: process.env.REDIRECT_URI || 'https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2Fauth%2Fcallback&scope=identify+guilds',
     SCOPES: ['identify', 'guilds']
 };
 
@@ -43,7 +43,7 @@ app.get('/auth/user', (req, res) => {
         scope: DISCORD_CONFIG.SCOPES.join(' '),
         state: 'user'
     });
-    res.redirect(`https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2Fauth%2Fcallback&scope=identify+guilds${params}`);
+    res.redirect(`https://discord.com/api/oauth2/authorize?${params}`);
 });
 
 // Iniciar login como Funcionario
@@ -171,4 +171,5 @@ app.listen(PORT, () => {
     console.log(`🚔 Servidor corriendo en puerto ${PORT}`);
     console.log(`📍 URL: http://localhost:${PORT}`);
     console.log(`🔐 Discord OAuth configurado`);
+    console.log(`📁 Sirviendo archivos desde: ${path.join(__dirname, 'public')}`);
 });
