@@ -7,8 +7,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 const CLIENT_ID = '1425170360189456547';
-const CLIENT_SECRET = process.env.CLIENT_SECRET; // Lo configuras en Render
-const REDIRECT_URI = 'https://comisaria-virtual-carabinero-chilenos-rp.onrender.com/';
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = 'https://comiseria-virtual-carabinero-chilenos.onrender.com/;
 
 app.post('/api/auth/discord', async (req, res) => {
     const { code } = req.body;
