@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const DISCORD_CONFIG = {
     CLIENT_ID: '1425170360189456547',
     CLIENT_SECRET: process.env.CLIENT_SECRET || '44uXihKa4Z4kXEnjvMlAJu7utlBSM_pZ',
-    REDIRECT_URI: process.env.REDIRECT_URI || 'https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2Fauth%2Fcallback&scope=identify+guilds',
+    REDIRECT_URI: process.env.REDIRECT_URI || 'https://comiseria-virtual-carabinero-chilenos-rp.onrender.com/auth/callback',
     SCOPES: ['identify', 'guilds']
 };
 
