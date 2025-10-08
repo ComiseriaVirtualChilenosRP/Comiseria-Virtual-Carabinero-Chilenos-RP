@@ -30,7 +30,6 @@
             position: relative;
         }
 
-        /* Partículas flotantes */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -69,13 +68,11 @@
             }
         }
 
-        /* Asegurar que el contenido esté por encima */
         header, .hero, section, footer {
             position: relative;
             z-index: 1;
         }
 
-        /* Pantalla de Carga Épica */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -140,7 +137,6 @@
             box-shadow: 0 0 10px rgba(0, 168, 89, 0.8);
         }
 
-        /* Header Épico */
         header {
             position: fixed;
             top: 0;
@@ -338,7 +334,6 @@
             font-size: 1.2rem;
         }
 
-        /* Estado de usuario */
         .user-status {
             display: flex;
             align-items: center;
@@ -387,7 +382,6 @@
             transform: translateY(-2px);
         }
 
-        /* Hero Section Épico */
         .hero {
             position: relative;
             height: 100vh;
@@ -482,7 +476,6 @@
             box-shadow: 0 15px 50px rgba(0, 168, 89, 0.7);
         }
 
-        /* Sección Quiénes Somos */
         .about-section {
             padding: 6rem 2rem;
             background: linear-gradient(180deg, var(--gris-oscuro), var(--gris-medio));
@@ -594,7 +587,6 @@
             box-shadow: 0 30px 80px rgba(0, 168, 89, 0.6);
         }
 
-        /* Sección de Trámites */
         .section {
             padding: 6rem 2rem 3rem;
             text-align: center;
@@ -617,7 +609,6 @@
             margin-bottom: 3rem;
         }
 
-        /* Filtros */
         .filter-buttons {
             display: flex;
             gap: 1rem;
@@ -650,7 +641,6 @@
             box-shadow: 0 5px 25px rgba(0, 168, 89, 0.5);
         }
 
-        /* Cards de Trámites */
         .card-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -741,7 +731,6 @@
             box-shadow: 0 10px 30px rgba(0, 168, 89, 0.6);
         }
 
-        /* Footer */
         .site-footer {
             background: var(--verde-oscuro);
             padding: 3rem 2rem 2rem;
@@ -821,7 +810,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -857,10 +845,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <!-- Sistema de Partículas -->
     <div id="particles-js"></div>
 
-    <!-- Pantalla de Carga Épica -->
     <div class="loading-screen" id="loadingScreen">
         <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP" class="loading-logo">
         <div class="loading-text">Cargando Comisaría Virtual...</div>
@@ -877,9 +863,7 @@
         <div class="header-center">
             <img src="https://i.imgur.com/oEuyEhc.png" alt="Logo ChilenosRP">
         </div>
-        <div class="header-right" id="headerRight">
-            <!-- El contenido se actualizará dinámicamente -->
-        </div>
+        <div class="header-right" id="headerRight"></div>
     </header>
 
     <div class="hero">
@@ -1015,12 +999,10 @@
     </footer>
 
     <script>
-        // ===== SISTEMA DE PARTÍCULAS =====
         class ParticleSystem {
             constructor() {
                 this.container = document.getElementById('particles-js');
                 this.particleCount = 50;
-                this.particles = [];
                 this.init();
             }
 
@@ -1028,10 +1010,7 @@
                 for (let i = 0; i < this.particleCount; i++) {
                     this.createParticle();
                 }
-                
-                setInterval(() => {
-                    this.createParticle();
-                }, 300);
+                setInterval(() => this.createParticle(), 300);
             }
 
             createParticle() {
@@ -1055,21 +1034,16 @@
                 `;
                 
                 this.container.appendChild(particle);
-                
-                setTimeout(() => {
-                    particle.remove();
-                }, (duration + delay) * 1000);
+                setTimeout(() => particle.remove(), (duration + delay) * 1000);
             }
         }
 
-        // ===== CONFIGURACIÓN DE DISCORD OAUTH =====
         const DISCORD_CONFIG = {
             CLIENT_ID: '1425170360189456547',
-            REDIRECT_URI: 'https://comiseria-virtual-carabinero-chilenos.onrender.com/',
-            AUTH_URL: 'https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos.onrender.com%2F&scope=identify+guilds'
+            REDIRECT_URI: 'https://comiseria-virtual-carabinero-chilenos-rp.onrender.com/',
+            AUTH_URL: 'https://discord.com/oauth2/authorize?client_id=1425170360189456547&response_type=code&redirect_uri=https%3A%2F%2Fcomiseria-virtual-carabinero-chilenos-rp.onrender.com%2F&scope=identify+guilds'
         };
 
-        // ===== GESTIÓN DE SESIÓN =====
         class SessionManager {
             static saveUser(userData) {
                 const userToSave = {
@@ -1092,7 +1066,6 @@
             }
         }
 
-        // ===== UI MANAGER =====
         class UIManager {
             static renderLoggedIn(user) {
                 const headerRight = document.getElementById('headerRight');
@@ -1140,7 +1113,6 @@
             }
         }
 
-        // ===== FUNCIONES GLOBALES =====
         function loginAsUser() {
             window.location.href = DISCORD_CONFIG.AUTH_URL;
         }
@@ -1163,22 +1135,18 @@
                 alert('Debes iniciar sesión para realizar este trámite');
                 return;
             }
-            
             alert(`Procesando trámite: ${tramiteName}\nUsuario: ${user.username}`);
         }
 
-        // ===== MANEJO DE CALLBACK DE DISCORD =====
         async function handleDiscordCallback() {
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
             
             if (code) {
                 try {
-                    const response = await fetch('/auth/discord', {
+                    const response = await fetch('/api/auth/discord', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ code })
                     });
                     
@@ -1186,9 +1154,7 @@
                         const userData = await response.json();
                         SessionManager.saveUser(userData);
                         UIManager.renderLoggedIn(userData);
-                        
                         window.history.replaceState({}, document.title, '/');
-                        
                         alert(`¡Bienvenido, ${userData.username}!`);
                     } else {
                         throw new Error('Error al autenticar');
@@ -1201,7 +1167,6 @@
             }
         }
 
-        // ===== INICIALIZACIÓN =====
         window.addEventListener('load', async function() {
             new ParticleSystem();
 
@@ -1214,9 +1179,7 @@
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
-                    setTimeout(() => {
-                        loadingScreen.classList.add('hidden');
-                    }, 500);
+                    setTimeout(() => loadingScreen.classList.add('hidden'), 500);
                 }
                 loadingBar.style.width = progress + '%';
             }, 200);
@@ -1231,7 +1194,6 @@
             }
         });
 
-        // ===== FILTROS DE TRÁMITES =====
         const filterButtons = document.querySelectorAll('.filter-buttons button');
         const cards = document.querySelectorAll('.card');
 
@@ -1246,26 +1208,18 @@
                     if (filter === 'todos') {
                         card.style.display = 'block';
                     } else {
-                        if (card.getAttribute('data-category') === filter) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
+                        card.style.display = card.getAttribute('data-category') === filter ? 'block' : 'none';
                     }
                 });
             });
         });
 
-        // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
