@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const DISCORD_CONFIG = {
     CLIENT_ID: '1425170360189456547',
     CLIENT_SECRET: process.env.CLIENT_SECRET || '44uXihKa4Z4kXEnjvMlAJu7utlBSM_pZ',
-    REDIRECT_URI: 'https://comiseria-virtual-carabinero-chilenos-rp.onrender.com/auth/callback',
+    REDIRECT_URI: process.env.REDIRECT_URI || 'https://comiseria-virtual-carabinero-chilenos.onrender.com/auth/callback',
     SCOPES: ['identify', 'guilds']
 };
 
@@ -36,26 +36,18 @@ app.get('/', (req, res) => {
 
 // Iniciar login como Usuario
 app.get('/auth/user', (req, res) => {
-    const params = new URLSearchParams({
-        client_id: DISCORD_CONFIG.CLIENT_ID,
-        redirect_uri: DISCORD_CONFIG.REDIRECT_URI,
-        response_type: 'code',
-        scope: DISCORD_CONFIG.SCOPES.join(' '),
-        state: 'user'
-    });
-    res.redirect(`https://discord.com/api/oauth2/authorize?${params}`);
+    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CONFIG.CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_CONFIG.REDIRECT_URI)}&response_type=code&scope=${encodeURIComponent(DISCORD_CONFIG.SCOPES.join(' '))}&state=user`;
+    
+    console.log('🔗 Auth URL generada:', authUrl);
+    res.redirect(authUrl);
 });
 
 // Iniciar login como Funcionario
 app.get('/auth/funcionario', (req, res) => {
-    const params = new URLSearchParams({
-        client_id: DISCORD_CONFIG.CLIENT_ID,
-        redirect_uri: DISCORD_CONFIG.REDIRECT_URI,
-        response_type: 'code',
-        scope: DISCORD_CONFIG.SCOPES.join(' '),
-        state: 'funcionario'
-    });
-    res.redirect(`https://discord.com/api/oauth2/authorize?${params}`);
+    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CONFIG.CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_CONFIG.REDIRECT_URI)}&response_type=code&scope=${encodeURIComponent(DISCORD_CONFIG.SCOPES.join(' '))}&state=funcionario`;
+    
+    console.log('🔗 Auth URL generada:', authUrl);
+    res.redirect(authUrl);
 });
 
 // Callback de Discord OAuth
