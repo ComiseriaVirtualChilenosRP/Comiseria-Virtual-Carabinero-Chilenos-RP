@@ -8,7 +8,7 @@ app.use(express.static('public'));
 
 const CLIENT_ID = '1425170360189456547';
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = 'https://comiseria-virtual-carabinero-chilenos.onrender.com/'; // Faltaba la comilla de cierre
+const REDIRECT_URI = 'https://comiseria-virtual-carabinero-chilenos-rp.onrender.com/'; // Cambiado : por =
 
 app.post('/api/auth/discord', async (req, res) => {
     const { code } = req.body;
